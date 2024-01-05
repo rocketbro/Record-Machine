@@ -6,19 +6,63 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
+    @Environment(\.modelContext) var modelContext
+    @Query var albums: [Album]
+    @State private var navPath = NavigationPath()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack(path: $navPath) {
+            List {
+                ForEach(albums) { album in
+                    NavigationLink(value: album) {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(album.title)
+                                    .font(.headline)
+                                Text(album.artist)
+                                    .font(.subheadline)
+                            }
+                            Spacer()
+                            Text(String(album.trackListing.count) + (album.trackListing.count == 1 ? " track" : " tracks"))
+                                .font(.subheadline)
+                                .padding(.horizontal)
+                                .padding(.vertical, 4)
+                                .background(primaryOrange)
+                                .clipShape(Capsule())
+                        }
+                    }
+                }
+                .onDelete(perform: deleteAlbums)
+            }
+            .navigationTitle("Record Machine")
+            .navigationDestination(for: Album.self) {
+                AlbumEditorView(album: $0, navPath: $navPath)
+            }
+            .toolbar {
+                ToolbarItem {
+                    Button("Add Album", systemImage: "plus", action: addAlbum)
+                }
+            }
         }
-        .padding()
+    }
+    
+    func addAlbum() {
+        let album = Album()
+        modelContext.insert(album)
+        navPath.append(album)
+    }
+    
+    func deleteAlbums(_ indexSet: IndexSet) {
+        for index in indexSet {
+            let album = albums[index]
+            modelContext.delete(album)
+        }
     }
 }
 
-#Preview {
-    ContentView()
-}
+//#Preview {
+//    ContentView()
+//}

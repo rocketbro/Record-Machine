@@ -11,6 +11,11 @@
 		ACF75A9B2B45E0300071633B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75A9A2B45E0300071633B /* ContentView.swift */; };
 		ACF75A9D2B45E0320071633B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACF75A9C2B45E0320071633B /* Assets.xcassets */; };
 		ACF75AA12B45E0320071633B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACF75AA02B45E0320071633B /* Preview Assets.xcassets */; };
+		ACF75AAA2B45E0560071633B /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75AA92B45E0560071633B /* Album.swift */; };
+		ACF75AAC2B45E0A30071633B /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75AAB2B45E0A30071633B /* Track.swift */; };
+		ACF75AAE2B45EBFB0071633B /* AlbumEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75AAD2B45EBFB0071633B /* AlbumEditorView.swift */; };
+		ACF75AB02B4671160071633B /* TrackEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75AAF2B4671160071633B /* TrackEditorView.swift */; };
+		ACF75AB22B46809D0071633B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75AB12B46809D0071633B /* Theme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +25,11 @@
 		ACF75A9C2B45E0320071633B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ACF75A9E2B45E0320071633B /* RecordMachine.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RecordMachine.entitlements; sourceTree = "<group>"; };
 		ACF75AA02B45E0320071633B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		ACF75AA92B45E0560071633B /* Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
+		ACF75AAB2B45E0A30071633B /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		ACF75AAD2B45EBFB0071633B /* AlbumEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumEditorView.swift; sourceTree = "<group>"; };
+		ACF75AAF2B4671160071633B /* TrackEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackEditorView.swift; sourceTree = "<group>"; };
+		ACF75AB12B46809D0071633B /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +62,8 @@
 		ACF75A972B45E0300071633B /* RecordMachine */ = {
 			isa = PBXGroup;
 			children = (
+				ACF75AA82B45E0460071633B /* presentation */,
+				ACF75AA72B45E0410071633B /* data */,
 				ACF75A982B45E0300071633B /* RecordMachineApp.swift */,
 				ACF75A9A2B45E0300071633B /* ContentView.swift */,
 				ACF75A9C2B45E0320071633B /* Assets.xcassets */,
@@ -67,6 +79,25 @@
 				ACF75AA02B45E0320071633B /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		ACF75AA72B45E0410071633B /* data */ = {
+			isa = PBXGroup;
+			children = (
+				ACF75AA92B45E0560071633B /* Album.swift */,
+				ACF75AAB2B45E0A30071633B /* Track.swift */,
+			);
+			path = data;
+			sourceTree = "<group>";
+		};
+		ACF75AA82B45E0460071633B /* presentation */ = {
+			isa = PBXGroup;
+			children = (
+				ACF75AAD2B45EBFB0071633B /* AlbumEditorView.swift */,
+				ACF75AAF2B4671160071633B /* TrackEditorView.swift */,
+				ACF75AB12B46809D0071633B /* Theme.swift */,
+			);
+			path = presentation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,8 +170,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACF75AAE2B45EBFB0071633B /* AlbumEditorView.swift in Sources */,
+				ACF75AAC2B45E0A30071633B /* Track.swift in Sources */,
 				ACF75A9B2B45E0300071633B /* ContentView.swift in Sources */,
+				ACF75AB02B4671160071633B /* TrackEditorView.swift in Sources */,
 				ACF75A992B45E0300071633B /* RecordMachineApp.swift in Sources */,
+				ACF75AAA2B45E0560071633B /* Album.swift in Sources */,
+				ACF75AB22B46809D0071633B /* Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

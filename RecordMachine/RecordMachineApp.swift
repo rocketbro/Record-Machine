@@ -6,12 +6,16 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct RecordMachineApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .monospaced()
+                .preferredColorScheme(.dark)
         }
+        .modelContainer(for: Album.self)
     }
 }
