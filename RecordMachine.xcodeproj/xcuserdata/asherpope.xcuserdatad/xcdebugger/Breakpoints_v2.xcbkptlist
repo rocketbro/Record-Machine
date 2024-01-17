@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "0D0EEF08-063A-482B-8D8E-AD8EE9581252"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "743CE6B5-CB68-4AC9-BFAF-211D8D67FE22"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RecordMachine/presentation/AudioEngine.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "playPause()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "743CE6B5-CB68-4AC9-BFAF-211D8D67FE22 - 694915cb4df4ef3e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordMachine.AudioEngine.playPause() -&gt; ()"
+                  moduleName = "RecordMachine"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asherpope/Library/Mobile%20Documents/com~apple~CloudDocs/Xcode/RecordMachine/RecordMachine/presentation/AudioEngine.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "115"
+                  endingLineNumber = "115"
+                  offsetFromSymbolStart = "928">
+               </Location>
+               <Location
+                  uuid = "743CE6B5-CB68-4AC9-BFAF-211D8D67FE22 - 694915cb4df4ecd9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordMachine.AudioEngine.playPause() -&gt; ()"
+                  moduleName = "RecordMachine"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asherpope/Library/Mobile%20Documents/com~apple~CloudDocs/Xcode/RecordMachine/RecordMachine/presentation/AudioEngine.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "116"
+                  endingLineNumber = "116"
+                  offsetFromSymbolStart = "148">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DFFDEB51-BFE9-4950-81CA-4912D744F9AF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RecordMachine/presentation/AudioEngine.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
+            landmarkName = "prepareAudioPlayer()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C211CE6C-2E9A-40C7-8384-2F70C6E83FE4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RecordMachine/presentation/AudioEngine.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
+            landmarkName = "restartAudioPlayer()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

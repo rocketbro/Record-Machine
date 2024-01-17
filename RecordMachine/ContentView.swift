@@ -18,20 +18,22 @@ struct ContentView: View {
             List {
                 ForEach(albums) { album in
                     NavigationLink(value: album) {
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(album.title)
-                                    .font(.headline)
-                                Text(album.artist)
+                        VStack {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(album.title.isEmpty ? "Unknown Album" : album.title)
+                                        .font(.headline)
+                                    Text(album.artist.isEmpty ? "Unknown Artist" : album.artist)
+                                        .font(.subheadline)
+                                }
+                                Spacer()
+                                Text(String(album.trackListing.count) + (album.trackListing.count == 1 ? " track" : " tracks"))
                                     .font(.subheadline)
+                                    .padding(.horizontal)
+                                    .padding(.vertical, 4)
+                                    .background(primaryOrange)
+                                    .clipShape(Capsule())
                             }
-                            Spacer()
-                            Text(String(album.trackListing.count) + (album.trackListing.count == 1 ? " track" : " tracks"))
-                                .font(.subheadline)
-                                .padding(.horizontal)
-                                .padding(.vertical, 4)
-                                .background(primaryOrange)
-                                .clipShape(Capsule())
                         }
                     }
                 }

@@ -15,7 +15,6 @@ struct RecordMachineApp: App {
             ContentView()
                 .monospaced()
                 .preferredColorScheme(.dark)
-        }
-        .modelContainer(for: Album.self)
+        }.modelContainer(for: Album.self)
     }
 }

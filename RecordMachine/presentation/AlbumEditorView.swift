@@ -10,30 +10,88 @@ import SwiftData
 import PhotosUI
 
 struct AlbumEditorView: View {
+    @Environment(\.horizontalSizeClass) var sizeClass
+    @Environment(\.modelContext) var modelContext
     @Bindable var album: Album
     @Binding var navPath: NavigationPath
     @State private var artworkSelection: PhotosPickerItem?
     
+    enum KeyboardFocus {
+        case title, artist, linerNotes
+    }
+    
+    @FocusState private var keyboardFocus: KeyboardFocus?
+    
     var body: some View {
         Form {
-            VStack(alignment: .center) {
-                if let artworkData = album.artwork, let uiImage = UIImage(data: artworkData) {
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .aspectRatio(1/1, contentMode: .fill)
-                        .cornerRadius(12)
-                }
-                
-                Text(album.title.isEmpty ? "Unknown Album" : album.title)
-                    .font(.title.bold())
-                
-                Text(album.artist.isEmpty ? "Unknown Artist" : album.artist)
-                    .font(.headline)
-            }
-            .frame(maxWidth: .infinity)
-            .listRowBackground(Color.clear)
-            .multilineTextAlignment(.center)
             
+            // MARK: Album Artwork & Title
+            if sizeClass == .compact {
+                VStack(alignment: .center) {
+                    ZStack {
+                        if let artworkData = album.artwork, let uiImage = UIImage(data: artworkData) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .aspectRatio(1/1, contentMode: .fill)
+                                .blur(radius: 50)
+                        }
+                        
+                        if let artworkData = album.artwork, let uiImage = UIImage(data: artworkData) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .aspectRatio(1/1, contentMode: .fill)
+                                .cornerRadius(8)
+                                .padding()
+                        }
+                    }
+                    
+                    Text(album.title.isEmpty ? "Unknown Album" : album.title)
+                        .font(.title.bold())
+                    
+                    Text(album.artist.isEmpty ? "Unknown Artist" : album.artist)
+                        .font(.headline)
+                }
+                .frame(maxWidth: .infinity)
+                .listRowBackground(Color.clear)
+                .multilineTextAlignment(.center)
+            }
+            
+            if sizeClass == .regular {
+                HStack(alignment: .center) {
+                    ZStack {
+                        if let artworkData = album.artwork, let uiImage = UIImage(data: artworkData) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .aspectRatio(1/1, contentMode: .fill)
+                                .blur(radius: 50)
+                        }
+                        
+                        if let artworkData = album.artwork, let uiImage = UIImage(data: artworkData) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .aspectRatio(1/1, contentMode: .fill)
+                                .cornerRadius(8)
+                                .padding()
+                        }
+                    }
+                    Spacer()
+                    VStack(alignment: .center) {
+                        Text(album.title.isEmpty ? "Unknown Album" : album.title)
+                            .font(.largeTitle.bold())
+                        
+                        Text(album.artist.isEmpty ? "Unknown Artist" : album.artist)
+                            .font(.headline)
+                        
+                    }
+                    .padding(.horizontal, 55)
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity)
+                .listRowBackground(Color.clear)
+                .multilineTextAlignment(.center)
+            }
+            
+            // MARK: Album detail editor
             Section {
                 HStack {
                     Text("Title:")
@@ -41,44 +99,41 @@ struct AlbumEditorView: View {
                     TextField("Title", text: $album.title, axis: .vertical)
                         .multilineTextAlignment(.trailing)
                         .foregroundStyle(primaryOrange)
+                        .focused($keyboardFocus, equals: .title)
+                        .onSubmit { keyboardFocus = nil }
+                        
                 }
+                
                 HStack {
                     Text("Artist:")
                     Spacer()
                     TextField("Artist", text: $album.artist, axis: .vertical)
                         .multilineTextAlignment(.trailing)
                         .foregroundStyle(primaryOrange)
+                        .focused($keyboardFocus, equals: .artist)
+                        .onSubmit { keyboardFocus = nil }
                 }
                 
-                DatePicker("Release Date:", selection: $album.releaseDate)
-                    .datePickerStyle(.compact)
-                
-                PhotosPicker("Update Artwork", selection: $artworkSelection, matching: .not(.videos))
-                    .photosPickerStyle(.presentation)
-                    .onChange(of: artworkSelection) {
-                        Task {
-                            if let loaded = try? await artworkSelection?.loadTransferable(type: Data.self) {
-                                album.artwork = loaded
-                            } else {
-                                print("Artwork load failed")
-                            }
-                        }
+                Picker("Genre", selection: $album.genre) {
+                    ForEach(MusicGenre.allCases, id: \.self) {
+                        Text($0.rawValue)
                     }
+                }
+                .pickerStyle(.navigationLink)
+                
+                DatePicker("Release Date:", selection: $album.releaseDate, displayedComponents: .date)
+                    .datePickerStyle(.compact)
                 
             } header: {
                 Text("Album Details")
             }
             
             Section {
-//                List($album.trackListing, editActions: .all) { $track in
-//                    NavigationLink(value: track) {
-//                        Text(track.title)
-//                    }
-//                }
                 List {
+                    // .sorted(by: {$0.trackNumber < $1.trackNumber})
                     ForEach(album.trackListing) { track in
                         NavigationLink(value: track) {
-                            Text(track.title)
+                            Text("\(track.trackNumber). \(track.title.isEmpty ? "Unknown Track" : track.title)")
                         }
                     }
                     .onDelete(perform: deleteTracks)
@@ -88,6 +143,8 @@ struct AlbumEditorView: View {
                 
                 Button("Add Song") {
                     let newTrack = Track(album: album)
+                    newTrack.trackNumber = album.trackListing.count
+                    newTrack.genre = album.genre
                     album.trackListing.append(newTrack)
                     navPath.append(newTrack)
                 }
@@ -96,7 +153,9 @@ struct AlbumEditorView: View {
             }
             
             Section {
-                TextField("Liner Notes", text: $album.linerNotes, axis: .vertical)
+                TextEditor(text: $album.linerNotes)
+                    .frame(minHeight: 300)
+                    .focused($keyboardFocus, equals: .linerNotes)
             } header: {
                 Text("Liner Notes")
             }
@@ -104,7 +163,23 @@ struct AlbumEditorView: View {
         .navigationTitle("Edit Album")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: Track.self) {
-            TrackEditorView(track: $0)
+            TrackEditorView(track: $0, path: $navPath)
+        }
+        .toolbar {
+            ToolbarItem {
+                PhotosPicker("\(Image(systemName: album.artwork == nil ? "photo.badge.plus" : "photo"))", selection: $artworkSelection, matching: .not(.videos))
+                    .photosPickerStyle(.presentation)
+                    .padding(.vertical)
+                    .onChange(of: artworkSelection) {
+                        Task {
+                            if let loaded = try? await artworkSelection?.loadTransferable(type: Data.self) {
+                                album.artwork = loaded
+                            } else {
+                                print("Artwork load failed")
+                            }
+                        }
+                    }
+            }
         }
     }
     
@@ -113,6 +188,15 @@ struct AlbumEditorView: View {
     }
     
     func move(from source: IndexSet, to destination: Int) {
+//        var tl = album.trackListing
+//        for index in source {
+//            if tl[index] == tl.first {
+//                tl[index].trackNumber = 0
+//                for trackIndex in tl.indices {
+//                    tl[trackIndex].trackNumber += 1
+//                }
+//            }
+//        }
         album.trackListing.move(fromOffsets: source, toOffset: destination)
     }
 }
