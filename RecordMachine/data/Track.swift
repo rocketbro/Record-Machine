@@ -19,9 +19,9 @@ class Track {
     var notes: String
     var album: Album?
     var audioUrl: URL?
-    var trackNumber: Int = 1
+    var attachedFiles: [AttachedFile]
     
-    init(title: String = "", writers: String = "", bpm: Int = 120, key: MusicKey = .c, genre: MusicGenre = .acoustic, lyrics: String = "", notes: String = "", album: Album? = nil) {
+    init(title: String = "", writers: String = "", bpm: Int = 120, key: MusicKey = .c, genre: MusicGenre = .acoustic, lyrics: String = "", notes: String = "", album: Album? = nil, attachedFiles: [AttachedFile] = []) {
         self.title = title
         self.writers = writers
         self.bpm = bpm
@@ -30,5 +30,6 @@ class Track {
         self.lyrics = lyrics
         self.notes = notes
         self.album = album
+        self.attachedFiles = attachedFiles
     }
 }

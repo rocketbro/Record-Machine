@@ -84,5 +84,128 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3F1E9502-CC2A-4526-968B-49625FB809AD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RecordMachine/presentation/PDFView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "init(for:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3F1E9502-CC2A-4526-968B-49625FB809AD - c0d2de0d5aff0202"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordMachine.PDFViewer.init(for: Foundation.URL) -&gt; RecordMachine.PDFViewer"
+                  moduleName = "RecordMachine"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asherpope/Library/Mobile%20Documents/com~apple~CloudDocs/Xcode/RecordMachine/RecordMachine/presentation/PDFView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "156">
+               </Location>
+               <Location
+                  uuid = "3F1E9502-CC2A-4526-968B-49625FB809AD - c0d2de0d5aff0202"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordMachine.PDFViewer.init(for: Foundation.URL) -&gt; RecordMachine.PDFViewer"
+                  moduleName = "RecordMachine"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asherpope/Library/Mobile%20Documents/com~apple~CloudDocs/Xcode/RecordMachine/RecordMachine/presentation/PDFView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "136">
+               </Location>
+               <Location
+                  uuid = "3F1E9502-CC2A-4526-968B-49625FB809AD - c0d2de0d5aff0202"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordMachine.PDFViewer.init(for: Foundation.URL) -&gt; RecordMachine.PDFViewer"
+                  moduleName = "RecordMachine"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asherpope/Library/Mobile%20Documents/com~apple~CloudDocs/Xcode/RecordMachine/RecordMachine/presentation/PDFView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "196">
+               </Location>
+               <Location
+                  uuid = "3F1E9502-CC2A-4526-968B-49625FB809AD - c0d2de0d5aff0202"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordMachine.PDFViewer.init(for: Foundation.URL) -&gt; RecordMachine.PDFViewer"
+                  moduleName = "RecordMachine"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asherpope/Library/Mobile%20Documents/com~apple~CloudDocs/Xcode/RecordMachine/RecordMachine/presentation/PDFView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "128">
+               </Location>
+               <Location
+                  uuid = "3F1E9502-CC2A-4526-968B-49625FB809AD - c0d2de0d5aff0202"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordMachine.PDFViewer.init(for: Foundation.URL) -&gt; RecordMachine.PDFViewer"
+                  moduleName = "RecordMachine"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asherpope/Library/Mobile%20Documents/com~apple~CloudDocs/Xcode/RecordMachine/RecordMachine/presentation/PDFView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "140">
+               </Location>
+               <Location
+                  uuid = "3F1E9502-CC2A-4526-968B-49625FB809AD - c0d2de0d5aff0202"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordMachine.PDFViewer.init(for: Foundation.URL) -&gt; RecordMachine.PDFViewer"
+                  moduleName = "RecordMachine"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asherpope/Library/Mobile%20Documents/com~apple~CloudDocs/Xcode/RecordMachine/RecordMachine/presentation/PDFView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "192">
+               </Location>
+               <Location
+                  uuid = "3F1E9502-CC2A-4526-968B-49625FB809AD - c0d2de0d5aff03e7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordMachine.PDFViewer.init(for: Foundation.URL) -&gt; RecordMachine.PDFViewer"
+                  moduleName = "RecordMachine"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asherpope/Library/Mobile%20Documents/com~apple~CloudDocs/Xcode/RecordMachine/RecordMachine/presentation/PDFView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "34"
+                  endingLineNumber = "34"
+                  offsetFromSymbolStart = "112">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

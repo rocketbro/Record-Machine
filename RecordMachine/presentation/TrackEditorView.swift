@@ -7,15 +7,22 @@
 
 import SwiftUI
 import SwiftData
+import PDFKit
+import UniformTypeIdentifiers
 
 struct TrackEditorView: View {
     @Environment(\.modelContext) var modelContext
     @Bindable var track: Track
     @Binding var path: NavigationPath
     @Query var albums: [Album]
-    @State private var fileName: String = "Import an audio file below"
+    @State private var audioFileName: String = "Import an audio file below"
     @State private var showingAudioPlayer = false
-        
+    @State private var presentPdfImporter = false
+    
+    @State private var showingAlert = false
+    @State private var attachedFileName = ""
+    @State private var attachedFileUrl: URL? = nil
+    
     var body: some View {
         ZStack {
             Form {
@@ -66,8 +73,60 @@ struct TrackEditorView: View {
                     .pickerStyle(.navigationLink)
                     
                     TextField("Track notes", text: $track.notes, axis: .vertical)
+                    
                 } header: {
                     Text("Track Info")
+                }
+                
+                Section {
+                    if !track.attachedFiles.isEmpty {
+                        List {
+                            ForEach(track.attachedFiles) { file in
+                                NavigationLink(file.title) {
+                                    PDFViewer(for: file.url!)
+                                }
+                            }
+                            .onDelete(perform: deleteFiles)
+                            .onMove(perform: moveFiles)
+                        }
+                    }
+                    
+                    Button(action: {
+                        presentPdfImporter.toggle()
+                    }) {
+                        //Label("Import File", systemImage: "doc")
+                        Text("Import File")
+                    }
+                    .fileImporter(isPresented: $presentPdfImporter, allowedContentTypes: [UTType.pdf, UTType.text]) { result in
+                        switch result {
+                        case .success(let url):
+                            if url.startAccessingSecurityScopedResource() {
+                                let localUrl = copyToDocumentDirectory(sourceUrl: url)
+                                attachedFileUrl = localUrl
+                                showingAlert.toggle()
+                            }
+                            url.stopAccessingSecurityScopedResource()
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        }
+                    }
+                    .alert("Name Attached File", isPresented: $showingAlert) {
+                        TextField("File name", text: $attachedFileName)
+                        Button("Attach") {
+                            let file = AttachedFile(title: attachedFileName, url: attachedFileUrl!)
+                            print(file)
+                            track.attachedFiles.append(file)
+                        }
+                        Button("Cancel", role: .cancel) {
+                            attachedFileName = ""
+                            attachedFileUrl = nil
+                        }
+                    } message: {
+                        Text("This name will be an in-app display name. External files will remain unchanged.")
+                    }
+                    
+                } header: {
+                    Text("Attached Files")
                 }
                 
                 Section {
@@ -94,7 +153,7 @@ struct TrackEditorView: View {
             .onAppear {
                 if track.audioUrl != nil {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        withAnimation { showingAudioPlayer.toggle() }
+                        withAnimation { showingAudioPlayer = true }
                     }
                 }
             }
@@ -103,7 +162,7 @@ struct TrackEditorView: View {
                 withAnimation {
                     VStack {
                         Spacer()
-                        AudioFilePlayer(track: track, fileName: $fileName)
+                        AudioFilePlayer(track: track, fileName: $audioFileName)
                             .padding(.horizontal)
                             .shadow(color: .black.opacity(0.35), radius: 20)
                             .transition(.move(edge: .bottom))
@@ -115,4 +174,16 @@ struct TrackEditorView: View {
         }
     }
     
+    func deleteFiles(_ indexSet: IndexSet) {
+        for i in indexSet {
+            print("\nRemoving file at \(track.attachedFiles[i].url!)...")
+            deleteFromDocumentDirectory(at: track.attachedFiles[i].url!)
+            print("Done.\n")
+        }
+        track.attachedFiles.remove(atOffsets: indexSet)
+    }
+    
+    func moveFiles(from source: IndexSet, to destination: Int) {
+        track.attachedFiles.move(fromOffsets: source, toOffset: destination)
+    }
 }

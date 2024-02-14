@@ -1,20 +1,21 @@
 //
-//  AudioEngine.swift
+//  RecordPlayerView.swift
 //  RecordMachine
 //
-//  Created by Asher Pope on 1/6/24.
+//  Created by Asher Pope on 1/18/24.
 //
 
 import SwiftUI
 import AVFoundation
 
-struct AudioFilePlayer: View {
-    @Bindable var track: Track
+
+struct RecordPlayerView: View {
+    @Bindable var album: Album
     @State private var audioPlayer: AVAudioPlayer?
     @State private var isPlaying = false
-    @State private var presentFileImporter = false
     @State private var fileLength: Double = 0
-    @Binding var fileName: String
+    @State private var currentTrackUrl: URL? = nil
+    @State private var fileName: String = ""
     
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -26,8 +27,19 @@ struct AudioFilePlayer: View {
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
     
+    var playlist: [URL] {
+        var list = [URL]()
+        for track in album.trackListing {
+            if let url = track.audioUrl {
+                list.append(url)
+            }
+        }
+        return list
+    }
+    
     var body: some View {
-        VStack(alignment: .center) {
+        NavigationStack {
+            // MARK: Status Window
             VStack {
                 Text("\(formattedTime)")
                     .font(.title3)
@@ -46,7 +58,16 @@ struct AudioFilePlayer: View {
             .padding(.vertical, 4)
             .background(.black)
             .cornerRadius(6)
+            .onChange(of: audioPlayer?.currentTime) {
+                guard let audioPlayer = audioPlayer else {
+                    return
+                }
+                if audioPlayer.currentTime == audioPlayer.duration {
+                    loadNextTrack()
+                }
+            }
             
+            // MARK: Transport Controls
             HStack(alignment: .center) {
                 
                 Spacer()
@@ -61,9 +82,8 @@ struct AudioFilePlayer: View {
                         .tint(.green)
                 }
                 .onAppear {
-                    prepareAudioPlayer()
+                    loadNextTrack()
                 }
-                .disabled(track.audioUrl == nil)
                 
                 Button(action: restartAudioPlayer) {
                     Image(systemName: "backward.fill")
@@ -74,67 +94,17 @@ struct AudioFilePlayer: View {
                         .cornerRadius(4)
                         .tint(.white)
                 }
-                .disabled(track.audioUrl == nil)
-                
-                Button(action: {
-                    stopAudioPlayer()
-                    presentFileImporter.toggle()
-                }) {
-                    Image(systemName: "waveform.badge.plus")
-                        .font(.title2)
-                        .frame(width: 24, height: 6)
-                        .padding()
-                        .background(.gray.opacity(0.25))
-                        .cornerRadius(4)
-                        .tint(.white)
-                }
-                .fileImporter(isPresented: $presentFileImporter, allowedContentTypes: [UTType.mp3, UTType.mpeg4Audio, UTType.aiff, UTType.wav, UTType.audio]) { result in
-                    switch result {
-                    case .success(let url):
-                        if url.startAccessingSecurityScopedResource() {
-                            let localUrl = copyToDocumentDirectory(sourceUrl: url)
-                            track.audioUrl = localUrl
-                            prepareAudioPlayer()
-                        }
-                        url.stopAccessingSecurityScopedResource()
-                    case .failure(let error):
-                        print(error)
-                    }
-                }
-                
-                Button(action: {
-                    stopAudioPlayer()
-                    deleteFromDocumentDirectory(at: track.audioUrl!)
-                    track.audioUrl = nil
-                    fileLength = 0
-                    fileName = "Import an audio file below"
-                }) {
-                    Image(systemName: "trash.fill")
-                        .font(.title2)
-                        .frame(width: 24, height: 6)
-                        .padding()
-                        .background(.gray.opacity(0.25))
-                        .cornerRadius(4)
-                        .tint(.red)
-                }
-                .disabled(track.audioUrl == nil)
                 
                 Spacer()
                 
                 
             }
         }
-        .padding()
-        .background(.ultraThinMaterial)
-        .background(primaryOrange.opacity(0.25))
-        .cornerRadius(8)
-        .frame(maxWidth: 500)
     }
     
-    
     func prepareAudioPlayer() {
-        guard let url = track.audioUrl else {
-            print("\(track.title).audioUrl is nil.")
+        guard let url = currentTrackUrl else {
+            print("\(currentTrackUrl!) is nil.")
             return
         }
         
@@ -147,7 +117,7 @@ struct AudioFilePlayer: View {
             fileName = url.lastPathComponent
         } catch {
             print("Error creating audio player: \(error.localizedDescription)")
-            track.audioUrl = nil
+            currentTrackUrl = nil
         }
     }
     
@@ -171,12 +141,8 @@ struct AudioFilePlayer: View {
             print("Audio player is nil.")
             return
         }
-        //        audioPlayer.pause()
-        //        isPlaying = false
         audioPlayer.currentTime = 0
         fileLength = audioPlayer.duration
-        //        audioPlayer.play()
-        //        isPlaying = true
     }
     
     func stopAudioPlayer() {
@@ -186,5 +152,26 @@ struct AudioFilePlayer: View {
         }
         audioPlayer.stop()
         isPlaying = false
+    }
+    
+    func loadNextTrack() {
+        if isPlaying {
+            stopAudioPlayer()
+        }
+        if (currentTrackUrl == nil) && (!playlist.isEmpty) {
+            currentTrackUrl = playlist.first
+            prepareAudioPlayer()
+            return
+            
+        } else if playlist.first(where: {$0 == currentTrackUrl}) != playlist.last {
+            let index: Int = playlist.firstIndex(of: (currentTrackUrl)!)!
+            currentTrackUrl = playlist[index]
+            prepareAudioPlayer()
+            return
+            
+        } else {
+            print("\nError: please check url (\(currentTrackUrl!)) and playlist (\(playlist))\n")
+            return
+        }
     }
 }

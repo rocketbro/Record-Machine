@@ -130,10 +130,9 @@ struct AlbumEditorView: View {
             
             Section {
                 List {
-                    // .sorted(by: {$0.trackNumber < $1.trackNumber})
                     ForEach(album.trackListing) { track in
                         NavigationLink(value: track) {
-                            Text("\(track.trackNumber). \(track.title.isEmpty ? "Unknown Track" : track.title)")
+                            Text("\((album.trackListing.firstIndex(of: track) ?? 0) + 1). \(track.title.isEmpty ? "Unknown Track" : track.title)")
                         }
                     }
                     .onDelete(perform: deleteTracks)
@@ -143,7 +142,6 @@ struct AlbumEditorView: View {
                 
                 Button("Add Song") {
                     let newTrack = Track(album: album)
-                    newTrack.trackNumber = album.trackListing.count
                     newTrack.genre = album.genre
                     album.trackListing.append(newTrack)
                     navPath.append(newTrack)
@@ -167,18 +165,38 @@ struct AlbumEditorView: View {
         }
         .toolbar {
             ToolbarItem {
-                PhotosPicker("\(Image(systemName: album.artwork == nil ? "photo.badge.plus" : "photo"))", selection: $artworkSelection, matching: .not(.videos))
-                    .photosPickerStyle(.presentation)
-                    .padding(.vertical)
-                    .onChange(of: artworkSelection) {
-                        Task {
-                            if let loaded = try? await artworkSelection?.loadTransferable(type: Data.self) {
-                                album.artwork = loaded
-                            } else {
-                                print("Artwork load failed")
-                            }
+                PhotosPicker(selection: $artworkSelection, matching: .not(.videos)) {
+                    Image(systemName: album.artwork == nil ? "photo.badge.plus" : "photo")
+                }
+                .photosPickerStyle(.presentation)
+                .padding(.vertical)
+                .onChange(of: artworkSelection) {
+                    Task {
+                        if let loaded = try? await artworkSelection?.loadTransferable(type: Data.self) {
+                            album.artwork = loaded
+                        } else {
+                            print("Artwork load failed")
                         }
                     }
+                }
+            }
+            
+            ToolbarItem {
+                Menu {
+                    NavigationLink("Play album", destination: RecordPlayerView(album: album))
+                    Button("Export album") { /* export code here */ }
+                        .disabled(true)
+                    Button(role: .destructive, action: {
+                        album.artwork = nil
+                        artworkSelection = nil
+                    }) {
+                        Label("Delete artwork", systemImage: "trash")
+                    }
+                    .disabled(album.artwork == nil)
+                    
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                }
             }
         }
     }

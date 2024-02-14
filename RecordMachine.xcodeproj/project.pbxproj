@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC06C3462B588A6100B1F395 /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC06C3452B588A6100B1F395 /* ToDo.swift */; };
+		AC06C3482B58A7F400B1F395 /* AttachedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC06C3472B58A7F400B1F395 /* AttachedFile.swift */; };
+		AC06C34A2B58B07600B1F395 /* AttachedFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC06C3492B58B07600B1F395 /* AttachedFileView.swift */; };
 		AC3B916E2B5835AD005BACD0 /* MusicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3B916D2B5835AD005BACD0 /* MusicKey.swift */; };
 		AC3B91702B58376C005BACD0 /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3B916F2B58376C005BACD0 /* PDFView.swift */; };
+		AC45A0F92B597E020013EFAB /* DocDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC45A0F82B597E020013EFAB /* DocDirectory.swift */; };
+		AC45A0FD2B59925F0013EFAB /* RecordPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC45A0FC2B59925F0013EFAB /* RecordPlayerView.swift */; };
 		AC5D905A2B49AD7A00FA3117 /* AudioFilePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5D90592B49AD7A00FA3117 /* AudioFilePlayer.swift */; };
 		AC6421FE2B52657200DBE891 /* MusicGenre.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6421FD2B52657200DBE891 /* MusicGenre.swift */; };
 		ACF75A992B45E0300071633B /* RecordMachineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75A982B45E0300071633B /* RecordMachineApp.swift */; };
@@ -23,8 +28,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AC06C3452B588A6100B1F395 /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
+		AC06C3472B58A7F400B1F395 /* AttachedFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachedFile.swift; sourceTree = "<group>"; };
+		AC06C3492B58B07600B1F395 /* AttachedFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachedFileView.swift; sourceTree = "<group>"; };
 		AC3B916D2B5835AD005BACD0 /* MusicKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicKey.swift; sourceTree = "<group>"; };
 		AC3B916F2B58376C005BACD0 /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
+		AC45A0F82B597E020013EFAB /* DocDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocDirectory.swift; sourceTree = "<group>"; };
+		AC45A0FC2B59925F0013EFAB /* RecordPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordPlayerView.swift; sourceTree = "<group>"; };
 		AC5D90592B49AD7A00FA3117 /* AudioFilePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFilePlayer.swift; sourceTree = "<group>"; };
 		AC6421FD2B52657200DBE891 /* MusicGenre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicGenre.swift; sourceTree = "<group>"; };
 		ACF75A952B45E0300071633B /* RecordMachine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecordMachine.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +106,9 @@
 				ACF75AAB2B45E0A30071633B /* Track.swift */,
 				AC6421FD2B52657200DBE891 /* MusicGenre.swift */,
 				AC3B916D2B5835AD005BACD0 /* MusicKey.swift */,
+				AC06C3452B588A6100B1F395 /* ToDo.swift */,
+				AC06C3472B58A7F400B1F395 /* AttachedFile.swift */,
+				AC45A0F82B597E020013EFAB /* DocDirectory.swift */,
 			);
 			path = data;
 			sourceTree = "<group>";
@@ -108,6 +121,8 @@
 				ACF75AB12B46809D0071633B /* Theme.swift */,
 				AC5D90592B49AD7A00FA3117 /* AudioFilePlayer.swift */,
 				AC3B916F2B58376C005BACD0 /* PDFView.swift */,
+				AC06C3492B58B07600B1F395 /* AttachedFileView.swift */,
+				AC45A0FC2B59925F0013EFAB /* RecordPlayerView.swift */,
 			);
 			path = presentation;
 			sourceTree = "<group>";
@@ -188,15 +203,20 @@
 			files = (
 				AC5D905A2B49AD7A00FA3117 /* AudioFilePlayer.swift in Sources */,
 				ACF75AAE2B45EBFB0071633B /* AlbumEditorView.swift in Sources */,
+				AC06C3482B58A7F400B1F395 /* AttachedFile.swift in Sources */,
 				ACF75AAC2B45E0A30071633B /* Track.swift in Sources */,
+				AC06C3462B588A6100B1F395 /* ToDo.swift in Sources */,
 				AC6421FE2B52657200DBE891 /* MusicGenre.swift in Sources */,
 				ACF75A9B2B45E0300071633B /* ContentView.swift in Sources */,
 				ACF75AB02B4671160071633B /* TrackEditorView.swift in Sources */,
+				AC45A0FD2B59925F0013EFAB /* RecordPlayerView.swift in Sources */,
+				AC06C34A2B58B07600B1F395 /* AttachedFileView.swift in Sources */,
 				ACF75A992B45E0300071633B /* RecordMachineApp.swift in Sources */,
 				ACF75AAA2B45E0560071633B /* Album.swift in Sources */,
 				ACF75AB22B46809D0071633B /* Theme.swift in Sources */,
 				AC3B91702B58376C005BACD0 /* PDFView.swift in Sources */,
 				AC3B916E2B5835AD005BACD0 /* MusicKey.swift in Sources */,
+				AC45A0F92B597E020013EFAB /* DocDirectory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +343,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = RecordMachine/RecordMachine.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RecordMachine/Preview Content\"";
@@ -361,6 +382,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = RecordMachine/RecordMachine.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RecordMachine/Preview Content\"";
