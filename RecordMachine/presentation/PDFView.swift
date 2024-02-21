@@ -34,7 +34,6 @@ struct PDFViewer: View, Hashable {
     var pdfDoc: PDFDocument = PDFDocument()
     
     init(for url: URL) {
-        print("\nPDF File url: \(url)\n")
         do {
             let data = try Data(contentsOf: url)
             pdfDoc = PDFDocument(data: data)!

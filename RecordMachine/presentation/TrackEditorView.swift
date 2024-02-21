@@ -15,7 +15,7 @@ struct TrackEditorView: View {
     @Bindable var track: Track
     @Binding var path: NavigationPath
     @Query var albums: [Album]
-    @State private var audioFileName: String = "Import an audio file below"
+    @State private var audioFileName: String = "Import an audio file"
     @State private var showingAudioPlayer = false
     @State private var presentPdfImporter = false
     
@@ -102,7 +102,10 @@ struct TrackEditorView: View {
                         case .success(let url):
                             if url.startAccessingSecurityScopedResource() {
                                 let localUrl = copyToDocumentDirectory(sourceUrl: url)
-                                attachedFileUrl = localUrl
+                                if let localUrl = localUrl {
+                                    print(localUrl)
+                                    attachedFileUrl = localUrl
+                                }
                                 showingAlert.toggle()
                             }
                             url.stopAccessingSecurityScopedResource()
@@ -122,7 +125,7 @@ struct TrackEditorView: View {
                             attachedFileUrl = nil
                         }
                     } message: {
-                        Text("This name will be an in-app display name. External files will remain unchanged.")
+                        Text("This name will be an in-app display name. External file names will remain unchanged.")
                     }
                     
                 } header: {

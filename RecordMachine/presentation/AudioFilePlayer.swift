@@ -93,7 +93,10 @@ struct AudioFilePlayer: View {
                     case .success(let url):
                         if url.startAccessingSecurityScopedResource() {
                             let localUrl = copyToDocumentDirectory(sourceUrl: url)
-                            track.audioUrl = localUrl
+                            if let localUrl = localUrl {
+                                print(localUrl)
+                                track.audioUrl = localUrl
+                            }
                             prepareAudioPlayer()
                         }
                         url.stopAccessingSecurityScopedResource()
@@ -137,8 +140,6 @@ struct AudioFilePlayer: View {
             print("\(track.title).audioUrl is nil.")
             return
         }
-        
-        print("\nAudio file url: \(url)\n")
         
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
