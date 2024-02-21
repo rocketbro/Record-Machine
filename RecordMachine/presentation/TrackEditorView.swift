@@ -23,6 +23,11 @@ struct TrackEditorView: View {
     @State private var attachedFileName = ""
     @State private var attachedFileUrl: URL? = nil
     
+    enum KeyboardFocus {
+        case title, writers, bpm, trackNotes, lyrics
+    }
+    @FocusState private var keyboardFocus: KeyboardFocus?
+    
     var body: some View {
         ZStack {
             Form {
@@ -30,16 +35,23 @@ struct TrackEditorView: View {
                     HStack {
                         Text("Title:")
                         Spacer()
-                        TextField("Title", text: $track.title, axis: .vertical)
+                        TextField("Title", text: $track.title)
                             .multilineTextAlignment(.trailing)
                             .foregroundStyle(primaryOrange)
+                            .focused($keyboardFocus, equals: .title)
+                            .submitLabel(.done)
+                            .onSubmit { keyboardFocus = nil }
+                        
                     }
                     HStack {
                         Text("Writers:")
                         Spacer()
-                        TextField("Writers", text: $track.writers, axis: .vertical)
+                        TextField("Writers", text: $track.writers)
                             .multilineTextAlignment(.trailing)
                             .foregroundStyle(primaryOrange)
+                            .focused($keyboardFocus, equals: .writers)
+                            .submitLabel(.done)
+                            .onSubmit { keyboardFocus = nil }
                     }
                     
                     HStack {
@@ -48,6 +60,9 @@ struct TrackEditorView: View {
                         TextField("BPM", value: $track.bpm, format: .number)
                             .multilineTextAlignment(.trailing)
                             .foregroundStyle(primaryOrange)
+                            .focused($keyboardFocus, equals: .bpm)
+                            .submitLabel(.done)
+                            .onSubmit { keyboardFocus = nil }
                     }
                     
                     Picker("Key", selection: $track.key) {
@@ -73,6 +88,7 @@ struct TrackEditorView: View {
                     .pickerStyle(.navigationLink)
                     
                     TextField("Track notes", text: $track.notes, axis: .vertical)
+                        .focused($keyboardFocus, equals: .trackNotes)
                     
                 } header: {
                     Text("Track Info")
@@ -94,8 +110,7 @@ struct TrackEditorView: View {
                     Button(action: {
                         presentPdfImporter.toggle()
                     }) {
-                        //Label("Import File", systemImage: "doc")
-                        Text("Import File")
+                        Text("Attach PDF or Text File")
                     }
                     .fileImporter(isPresented: $presentPdfImporter, allowedContentTypes: [UTType.pdf, UTType.text]) { result in
                         switch result {
@@ -135,6 +150,8 @@ struct TrackEditorView: View {
                 Section {
                     TextEditor(text: $track.lyrics)
                         .frame(minHeight: 500)
+                        .scrollDismissesKeyboard(.interactively)
+                        .focused($keyboardFocus, equals: .lyrics)
                 } header: {
                     Text("Lyrics")
                 }
@@ -143,6 +160,14 @@ struct TrackEditorView: View {
             .navigationBarTitleDisplayMode(.inline)
             .zIndex(1)
             .toolbar {
+                
+                if keyboardFocus == .trackNotes || keyboardFocus == .lyrics {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        Spacer()
+                        Button("Done") { keyboardFocus = nil }
+                    }
+                }
+                
                 ToolbarItem {
                     Button(action: {
                         withAnimation {

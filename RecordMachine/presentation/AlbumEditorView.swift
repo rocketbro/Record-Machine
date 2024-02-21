@@ -19,7 +19,6 @@ struct AlbumEditorView: View {
     enum KeyboardFocus {
         case title, artist, linerNotes
     }
-    
     @FocusState private var keyboardFocus: KeyboardFocus?
     
     var body: some View {
@@ -32,18 +31,24 @@ struct AlbumEditorView: View {
                         if let artworkData = album.artwork, let uiImage = UIImage(data: artworkData) {
                             Image(uiImage: uiImage)
                                 .resizable()
-                                .aspectRatio(1/1, contentMode: .fill)
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 300, height: 300)
+                                .clipped()
                                 .blur(radius: 50)
                         }
                         
                         if let artworkData = album.artwork, let uiImage = UIImage(data: artworkData) {
                             Image(uiImage: uiImage)
                                 .resizable()
-                                .aspectRatio(1/1, contentMode: .fill)
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 300, height: 300)
+                                .clipped()
                                 .cornerRadius(8)
                                 .padding()
+                                
                         }
                     }
+                    .aspectRatio(1/1, contentMode: .fit)
                     
                     Text(album.title.isEmpty ? "Unknown Album" : album.title)
                         .font(.title.bold())
@@ -62,14 +67,18 @@ struct AlbumEditorView: View {
                         if let artworkData = album.artwork, let uiImage = UIImage(data: artworkData) {
                             Image(uiImage: uiImage)
                                 .resizable()
-                                .aspectRatio(1/1, contentMode: .fill)
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 400, height: 400)
+                                .clipped()
                                 .blur(radius: 50)
                         }
                         
                         if let artworkData = album.artwork, let uiImage = UIImage(data: artworkData) {
                             Image(uiImage: uiImage)
                                 .resizable()
-                                .aspectRatio(1/1, contentMode: .fill)
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 400, height: 400)
+                                .clipped()
                                 .cornerRadius(8)
                                 .padding()
                         }
@@ -96,21 +105,22 @@ struct AlbumEditorView: View {
                 HStack {
                     Text("Title:")
                     Spacer()
-                    TextField("Title", text: $album.title, axis: .vertical)
+                    TextField("Title", text: $album.title)
                         .multilineTextAlignment(.trailing)
                         .foregroundStyle(primaryOrange)
                         .focused($keyboardFocus, equals: .title)
+                        .submitLabel(.done)
                         .onSubmit { keyboardFocus = nil }
-                        
                 }
                 
                 HStack {
                     Text("Artist:")
                     Spacer()
-                    TextField("Artist", text: $album.artist, axis: .vertical)
+                    TextField("Artist", text: $album.artist)
                         .multilineTextAlignment(.trailing)
                         .foregroundStyle(primaryOrange)
                         .focused($keyboardFocus, equals: .artist)
+                        .submitLabel(.done)
                         .onSubmit { keyboardFocus = nil }
                 }
                 
@@ -164,6 +174,14 @@ struct AlbumEditorView: View {
             TrackEditorView(track: $0, path: $navPath)
         }
         .toolbar {
+            
+            if keyboardFocus == .linerNotes {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") { keyboardFocus = nil }
+                }
+            }
+            
             ToolbarItem {
                 PhotosPicker(selection: $artworkSelection, matching: .not(.videos)) {
                     Image(systemName: album.artwork == nil ? "photo.badge.plus" : "photo")
@@ -183,7 +201,7 @@ struct AlbumEditorView: View {
             
             ToolbarItem {
                 Menu {
-                    NavigationLink("Play album", destination: RecordPlayerView(album: album))
+                    //NavigationLink("Play album", destination: RecordPlayerView(album: album))
                     Button("Export album") { /* export code here */ }
                         .disabled(true)
                     Button(role: .destructive, action: {
@@ -200,21 +218,22 @@ struct AlbumEditorView: View {
             }
         }
     }
+
     
     func deleteTracks(_ indexSet: IndexSet) {
         album.trackListing.remove(atOffsets: indexSet)
     }
     
     func move(from source: IndexSet, to destination: Int) {
-//        var tl = album.trackListing
-//        for index in source {
-//            if tl[index] == tl.first {
-//                tl[index].trackNumber = 0
-//                for trackIndex in tl.indices {
-//                    tl[trackIndex].trackNumber += 1
-//                }
-//            }
-//        }
+        //        var tl = album.trackListing
+        //        for index in source {
+        //            if tl[index] == tl.first {
+        //                tl[index].trackNumber = 0
+        //                for trackIndex in tl.indices {
+        //                    tl[trackIndex].trackNumber += 1
+        //                }
+        //            }
+        //        }
         album.trackListing.move(fromOffsets: source, toOffset: destination)
     }
 }
