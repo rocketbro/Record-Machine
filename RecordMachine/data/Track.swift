@@ -11,6 +11,7 @@ import SwiftData
 @Model
 class Track {
     var title: String
+    var index: Int
     var writers: String
     var bpm: Int
     var key: MusicKey
@@ -21,8 +22,9 @@ class Track {
     var audioUrl: URL?
     var attachedFiles: [AttachedFile]
     
-    init(title: String = "", writers: String = "", bpm: Int = 120, key: MusicKey = .c, genre: MusicGenre = .acoustic, lyrics: String = "", notes: String = "", album: Album? = nil, attachedFiles: [AttachedFile] = []) {
+    init(title: String = "", index: Int = 0, writers: String = "", bpm: Int = 120, key: MusicKey = .c, genre: MusicGenre = .acoustic, lyrics: String = "", notes: String = "", album: Album? = nil, attachedFiles: [AttachedFile] = []) {
         self.title = title
+        self.index = index
         self.writers = writers
         self.bpm = bpm
         self.key = key
