@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AC06C3462B588A6100B1F395 /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC06C3452B588A6100B1F395 /* ToDo.swift */; };
 		AC06C3482B58A7F400B1F395 /* AttachedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC06C3472B58A7F400B1F395 /* AttachedFile.swift */; };
 		AC06C34A2B58B07600B1F395 /* AttachedFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC06C3492B58B07600B1F395 /* AttachedFileView.swift */; };
 		AC3B916E2B5835AD005BACD0 /* MusicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3B916D2B5835AD005BACD0 /* MusicKey.swift */; };
@@ -28,7 +27,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AC06C3452B588A6100B1F395 /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
 		AC06C3472B58A7F400B1F395 /* AttachedFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachedFile.swift; sourceTree = "<group>"; };
 		AC06C3492B58B07600B1F395 /* AttachedFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachedFileView.swift; sourceTree = "<group>"; };
 		AC3B916D2B5835AD005BACD0 /* MusicKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicKey.swift; sourceTree = "<group>"; };
@@ -108,7 +106,6 @@
 				ACF75AAB2B45E0A30071633B /* Track.swift */,
 				AC6421FD2B52657200DBE891 /* MusicGenre.swift */,
 				AC3B916D2B5835AD005BACD0 /* MusicKey.swift */,
-				AC06C3452B588A6100B1F395 /* ToDo.swift */,
 				AC06C3472B58A7F400B1F395 /* AttachedFile.swift */,
 				AC45A0F82B597E020013EFAB /* DocDirectory.swift */,
 			);
@@ -159,7 +156,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					ACF75A942B45E0300071633B = {
 						CreatedOnToolsVersion = 15.0.1;
@@ -207,7 +204,6 @@
 				ACF75AAE2B45EBFB0071633B /* AlbumEditorView.swift in Sources */,
 				AC06C3482B58A7F400B1F395 /* AttachedFile.swift in Sources */,
 				ACF75AAC2B45E0A30071633B /* Track.swift in Sources */,
-				AC06C3462B588A6100B1F395 /* ToDo.swift in Sources */,
 				AC6421FE2B52657200DBE891 /* MusicGenre.swift in Sources */,
 				ACF75A9B2B45E0300071633B /* ContentView.swift in Sources */,
 				ACF75AB02B4671160071633B /* TrackEditorView.swift in Sources */,
@@ -259,6 +255,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -283,6 +280,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
 			};
 			name = Debug;
 		};
@@ -320,6 +318,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -336,6 +335,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_STRICT_CONCURRENCY = complete;
 			};
 			name = Release;
 		};
@@ -348,6 +348,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"RecordMachine/Preview Content\"";
 				DEVELOPMENT_TEAM = 8462243PH7;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -389,6 +390,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"RecordMachine/Preview Content\"";
 				DEVELOPMENT_TEAM = 8462243PH7;
 				ENABLE_HARDENED_RUNTIME = YES;
