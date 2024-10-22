@@ -70,29 +70,28 @@ struct AlbumEditorView: View {
             }
             
             // MARK: Album detail editor
+            
             Section {
-                HStack {
-                    Text("Title:")
-                    Spacer()
-                    TextField("Title", text: $album.title)
-                        .multilineTextAlignment(.trailing)
-                        .foregroundStyle(primaryOrange)
-                        .focused($keyboardFocus, equals: .title)
-                        .submitLabel(.done)
-                        .onSubmit { keyboardFocus = nil }
-                }
-                
-                HStack {
-                    Text("Artist:")
-                    Spacer()
-                    TextField("Artist", text: $album.artist)
-                        .multilineTextAlignment(.trailing)
-                        .foregroundStyle(primaryOrange)
-                        .focused($keyboardFocus, equals: .artist)
-                        .submitLabel(.done)
-                        .onSubmit { keyboardFocus = nil }
-                }
-                
+                TextField("Enter title", text: $album.title)
+                    .foregroundStyle(primaryOrange)
+                    .focused($keyboardFocus, equals: .title)
+                    .submitLabel(.done)
+                    .onSubmit { keyboardFocus = nil }
+            } header: {
+                Text("Title")
+            }
+            
+            Section {
+                TextField("Enter artist", text: $album.artist)
+                    .foregroundStyle(primaryOrange)
+                    .focused($keyboardFocus, equals: .title)
+                    .submitLabel(.done)
+                    .onSubmit { keyboardFocus = nil }
+            } header: {
+                Text("Artist")
+            }
+            
+            Section {
                 Picker("Genre", selection: $album.genre) {
                     ForEach(MusicGenre.allCases, id: \.self) {
                         Text($0.rawValue)

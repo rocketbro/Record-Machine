@@ -16,7 +16,7 @@ class Album {
     var releaseDate: Date = Date.now
     var linerNotes: String = ""
     var artwork: Data? = nil
-    var trackListing = [Track]()
+    @Relationship(deleteRule: .cascade, inverse: \Track.album) var trackListing = [Track]()
     
     init(title: String = "", artist: String = "", genre: MusicGenre = .acoustic, releaseDate: Date = .now, linerNotes: String = "") {
         self.title = title

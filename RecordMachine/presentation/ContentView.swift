@@ -61,7 +61,7 @@ struct ContentView: View {
                     }
                 }
                 .sheet(isPresented: audioManager.sheetBinding) {
-                    LargeAudioPlayer(audioManager: audioManager)
+                    LargeAudioPlayer()
                 }
             }
             
@@ -69,7 +69,7 @@ struct ContentView: View {
                 withAnimation {
                     VStack {
                         Spacer()
-                        AudioFilePlayer(audioManager: audioManager)
+                        MiniAudioPlayer()
                             .padding(.horizontal, 6)
                             .shadow(color: .black.opacity(0.35), radius: 20)
                             .transition(.move(edge: .bottom))

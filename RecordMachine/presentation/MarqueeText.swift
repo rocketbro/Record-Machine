@@ -56,7 +56,7 @@ struct MarqueeText: View {
                     resetAnimation()
                 }
         }
-        .frame(width: width, height: height)
+        .frame(width: width > 0 ? width : 0, height: height > 0 ? height : 0)
         .clipped()
     }
     
@@ -122,4 +122,11 @@ struct MarqueeText: View {
             }
         }
     }
+    
+//    private func frameWidth(in geometry: GeometryProxy) -> CGFloat {
+//        guard width > 0 else { return 0 }
+//        let trackWidth = max(0, geometry.size.width - handleDiameter)
+//        let progress = CGFloat(max(0, min(displayTime, duration)) / duration)
+//        return max(0, min(trackWidth * progress, geometry.size.width))
+//    }
 }

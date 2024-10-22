@@ -12,9 +12,12 @@ import AVFoundation
 import MediaPlayer
 
 @Observable final class AudioManager: NSObject, Sendable, AVAudioPlayerDelegate {
-    var audioPlayer: AVAudioPlayer?
+    private var audioPlayer: AVAudioPlayer?
     var showingPlayer: Bool = false
-    var currentFileLength: Double = 0
+    private var _currentFileLength: Double = 0
+    var currentFileLength: Double {
+        get { _currentFileLength }
+    }
     var currentFileName: String = "Import an audio file below"
     var currentTrack: Track?
     var queue: [Track] = []
@@ -22,11 +25,16 @@ import MediaPlayer
     var showFullPlayer: Bool = false
     
     var sheetBinding: Binding<Bool> {
-            Binding(
-                get: { self.showFullPlayer },
-                set: { self.showFullPlayer = $0 }
-            )
-        }
+        Binding(
+            get: { self.showFullPlayer },
+            set: { self.showFullPlayer = $0 }
+        )
+    }
+    
+    private var _audioPlayerCurrentTime: Double = 0
+    var audioPlayerCurrentTime: Double {
+        get { _audioPlayerCurrentTime }
+    }
     
     private var isObserving: Bool = false
     private var observationTask: Task<Void, Never>?
@@ -83,15 +91,15 @@ import MediaPlayer
         }
         
         // Seek command
-        //        commandCenter.changePlaybackPositionCommand.addTarget { [weak self] event in
-        //            guard let event = event as? MPChangePlaybackPositionCommandEvent,
-        //                  let player = self?.audioPlayer else {
-        //                return .commandFailed
-        //            }
-        //            player.currentTime = event.positionTime
-        //            self?.updateNowPlayingInfo()
-        //            return .success
-        //        }
+        commandCenter.changePlaybackPositionCommand.addTarget { [weak self] event in
+            guard let event = event as? MPChangePlaybackPositionCommandEvent,
+                  let player = self?.audioPlayer else {
+                return .commandFailed
+            }
+            player.currentTime = event.positionTime
+            self?.updateNowPlayingData()
+            return .success
+        }
     }
     
     private func processArtwork(_ image: UIImage) -> UIImage {
@@ -134,37 +142,52 @@ import MediaPlayer
     }
     
     func updateNewTrackData() {
-        var nowPlayingInfo = [String: Any]()
-        
-        if let track = currentTrack {
-            // Basic metadata - ensure all values are strings
-            nowPlayingInfo[MPMediaItemPropertyTitle] = track.title as NSString
-            nowPlayingInfo[MPMediaItemPropertyArtist] = (track.album?.artist ?? "Unknown Artist") as NSString
-            nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = (track.album?.title ?? "Unknown Album") as NSString
-            
-            // Add artwork if available
-            if let artworkData = track.album?.artwork {
-                if let artworkImage = UIImage(data: artworkData) {
-                    let processedImage = processArtwork(artworkImage)
-                    let artwork = MPMediaItemArtwork(boundsSize: processedImage.size) { _ in
-                        return processedImage
-                    }
-                    nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
-                }
-            }
+        guard let track = currentTrack else {
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
+            return
         }
         
-        updateNowPlayingData()
+        var nowPlayingInfo = [String: Any]()
+        
+        // Basic metadata
+        nowPlayingInfo[MPMediaItemPropertyTitle] = track.title
+        nowPlayingInfo[MPMediaItemPropertyArtist] = track.album?.artist ?? "Unknown Artist"
+        nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = track.album?.title ?? "Unknown Album"
+        
+        // Add artwork if available
+        if let artworkData = track.album?.artwork,
+           let artworkImage = UIImage(data: artworkData) {
+            let processedImage = processArtwork(artworkImage)
+            let artwork = MPMediaItemArtwork(boundsSize: processedImage.size) { _ in
+                return processedImage
+            }
+            nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
+        }
+        
+        // Playback information
+        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = currentFileLength
+        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = audioPlayer?.currentTime ?? 0
+        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = isPlaying ? 1.0 : 0.0
+        
+        _audioPlayerCurrentTime = self.audioPlayer?.currentTime ?? 0
         
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
     
     func updateNowPlayingData() {
-        var nowPlayingInfo = [String: Any]()
-        // Playback information - ensure numeric values are NSNumber
-        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = NSNumber(value: currentFileLength)
-        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = NSNumber(value: audioPlayer?.currentTime ?? 0)
-        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = NSNumber(value: isPlaying ? 1.0 : 0.0)
+        guard let track = currentTrack else {
+            return
+        }
+        
+        var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo ?? [String: Any]()
+        
+        nowPlayingInfo[MPMediaItemPropertyTitle] = track.title
+        // Use the stored length instead of querying the player
+        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = _currentFileLength
+        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = audioPlayer?.currentTime ?? 0
+        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = isPlaying ? 1.0 : 0.0
+        
+        _audioPlayerCurrentTime = self.audioPlayer?.currentTime ?? 0
         
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
@@ -192,7 +215,7 @@ import MediaPlayer
                 audioPlayer.play()
                 isPlaying = true
             }
-            updateNowPlayingData()
+            updateNewTrackData()
         } else {
             print("Audio player is nil")
         }
@@ -204,7 +227,6 @@ import MediaPlayer
                 if let oldTrack = currentTrack {
                     currentTrack = queue[queue.firstIndex(of: oldTrack)! + 1]
                     prepareAudioPlayer()
-                    updateNewTrackData()
                 }
             } else {
                 stopAudioPlayer()
@@ -219,7 +241,6 @@ import MediaPlayer
                 if let oldTrack = currentTrack {
                     currentTrack = queue[queue.firstIndex(of: oldTrack)! - 1]
                     prepareAudioPlayer()
-                    updateNewTrackData()
                 }
             }
         }
@@ -232,8 +253,6 @@ import MediaPlayer
         }
         
         audioPlayer.currentTime = 0
-        currentFileLength = audioPlayer.duration
-        updateNewTrackData()
     }
     
     func rewindButton() {
@@ -287,8 +306,9 @@ import MediaPlayer
     
     func resetPlayer() {
         audioPlayer?.stop()
+        audioPlayer?.currentTime = 0
         isPlaying = false
-        currentFileLength = 0
+        _currentFileLength = 0
         currentFileName = "Import an audio file below"
         updateNewTrackData()
     }
@@ -310,10 +330,11 @@ import MediaPlayer
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             audioPlayer?.delegate = self
             audioPlayer?.prepareToPlay()
-            currentFileLength = audioPlayer?.duration ?? 0
+            _currentFileLength = audioPlayer?.duration ?? 0
             currentFileName = url.lastPathComponent
             
             // Start observing playback progress for updating now playing info
+            updateNewTrackData()
             startPlaybackObservation()
             
             guard let audioPlayer = audioPlayer else {
@@ -328,8 +349,6 @@ import MediaPlayer
                     isPlaying = false
                 }
             }
-            
-            updateNewTrackData()
         } catch {
             print("Error creating audio player: \(error.localizedDescription)")
             track.audioUrl = nil
@@ -339,14 +358,12 @@ import MediaPlayer
     private func startPlaybackObservation() {
         guard !isObserving else { return }
         isObserving = true
-        
         observationTask = Task { @MainActor [weak self] in
             guard let self else { return }
-            self.updateNewTrackData()
-            
             while self.isObserving {
                 self.updateNowPlayingData()
-                try? await Task.sleep(for: .milliseconds(500))
+                // Changed sleep duration from 500ms to 250ms for smoother updates
+                try? await Task.sleep(for: .milliseconds(250))
             }
         }
     }

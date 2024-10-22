@@ -17,6 +17,7 @@ struct TrackEditorView: View {
     @Binding var path: NavigationPath
     @Query var albums: [Album]
     @State private var presentPdfImporter = false
+    @State private var presentFileImporter = false
     
     @State private var showingAlert = false
     @State private var attachedFileName = ""
@@ -31,27 +32,26 @@ struct TrackEditorView: View {
         ZStack {
             Form {
                 Section {
-                    HStack {
-                        Text("Title:")
-                        Spacer()
-                        TextField("Title", text: $track.title)
-                            .multilineTextAlignment(.trailing)
-                            .foregroundStyle(primaryOrange)
-                            .focused($keyboardFocus, equals: .title)
-                            .submitLabel(.done)
-                            .onSubmit { keyboardFocus = nil }
-                        
-                    }
-                    HStack {
-                        Text("Writers:")
-                        Spacer()
-                        TextField("Writers", text: $track.writers)
-                            .multilineTextAlignment(.trailing)
-                            .foregroundStyle(primaryOrange)
-                            .focused($keyboardFocus, equals: .writers)
-                            .submitLabel(.done)
-                            .onSubmit { keyboardFocus = nil }
-                    }
+                    TextField("Enter title", text: $track.title)
+                        .foregroundStyle(primaryOrange)
+                        .focused($keyboardFocus, equals: .title)
+                        .submitLabel(.done)
+                        .onSubmit { keyboardFocus = nil }
+                } header: {
+                    Text("Title")
+                }
+                
+                Section {
+                    TextField("Writers", text: $track.writers)
+                        .foregroundStyle(primaryOrange)
+                        .focused($keyboardFocus, equals: .title)
+                        .submitLabel(.done)
+                        .onSubmit { keyboardFocus = nil }
+                } header: {
+                    Text("Writers")
+                }
+                
+                Section {
                     
                     HStack {
                         Text("BPM:")
@@ -86,76 +86,119 @@ struct TrackEditorView: View {
                     }
                     .pickerStyle(.navigationLink)
                     
-                    TextField("Track notes", text: $track.notes, axis: .vertical)
-                        .focused($keyboardFocus, equals: .trackNotes)
-                    
                 } header: {
                     Text("Track Info")
                 }
                 
                 Section {
-                    if !track.attachedFiles.isEmpty {
-                        List {
-                            ForEach(track.attachedFiles) { file in
-                                NavigationLink(file.title) {
-                                    PDFViewer(for: file.url!)
-                                }
-                            }
-                            .onDelete(perform: deleteFiles)
-                            .onMove(perform: moveFiles)
-                        }
-                    }
-                    
+                    TextField("Track notes", text: $track.notes, axis: .vertical)
+                        .focused($keyboardFocus, equals: .trackNotes)
+                } header: {
+                    Text("Track Notes")
+                }
+                
+                Section {
                     Button(action: {
-                        presentPdfImporter.toggle()
+                        audioManager.stopAudioPlayer()
+                        presentFileImporter.toggle()
                     }) {
-                        Text("Attach PDF or Text File")
+                        Text(track.audioUrl == nil ? "Add Audio File" : "Change Audio File")
                     }
-                    .fileImporter(isPresented: $presentPdfImporter, allowedContentTypes: [UTType.pdf, UTType.text]) { result in
+                    .fileImporter(isPresented: $presentFileImporter, allowedContentTypes: [UTType.mp3, UTType.mpeg4Audio, UTType.aiff, UTType.wav, UTType.audio]) { result in
                         switch result {
                         case .success(let url):
                             if url.startAccessingSecurityScopedResource() {
                                 let localUrl = copyToDocumentDirectory(sourceUrl: url)
                                 if let localUrl = localUrl {
                                     print(localUrl)
-                                    attachedFileUrl = localUrl
+                                    track.audioUrl = localUrl
                                 }
-                                showingAlert.toggle()
+                                audioManager.prepareAudioPlayer()
                             }
                             url.stopAccessingSecurityScopedResource()
                         case .failure(let error):
-                            print(error.localizedDescription)
+                            print(error)
                         }
-                    }
-                    .alert("Name Attached File", isPresented: $showingAlert) {
-                        TextField("File name", text: $attachedFileName)
-                        Button("Attach") {
-                            let file = AttachedFile(title: attachedFileName, url: attachedFileUrl!)
-                            print(file)
-                            track.attachedFiles.append(file)
-                        }
-                        Button("Cancel", role: .cancel) {
-                            attachedFileName = ""
-                            attachedFileUrl = nil
-                        }
-                    } message: {
-                        Text("This name will be an in-app display name. External file names will remain unchanged.")
                     }
                     
+                    if track.audioUrl != nil {
+                        Button("Remove audio file") { showingAlert.toggle() }
+                            .alert("Remove Audio File", isPresented: $showingAlert, actions: {
+                                Button("Remove", role: .destructive, action: deleteAudioUrl)
+                                Button("Cancel", role: .cancel) { }
+                            }, message: {
+                                Text("This will remove the file \(track.audioUrl!.lastPathComponent). External files remain unchanged.")
+                            })
+                    }
                 } header: {
-                    Text("Attached Files")
+                    Text("Audio File")
+                } footer: {
+                    Text(track.audioUrl?.lastPathComponent ?? "No file loaded.")
                 }
+                
+//                Section {
+//                    if !track.attachedFiles.isEmpty {
+//                        List {
+//                            ForEach(track.attachedFiles) { file in
+//                                NavigationLink(file.title) {
+//                                    PDFViewer(for: file.url!)
+//                                }
+//                            }
+//                            .onDelete(perform: deleteFiles)
+//                            .onMove(perform: moveFiles)
+//                        }
+//                    }
+//                    
+//                    Button(action: {
+//                        presentPdfImporter.toggle()
+//                    }) {
+//                        Text("Attach PDF or Text File")
+//                    }
+//                    .fileImporter(isPresented: $presentPdfImporter, allowedContentTypes: [UTType.pdf, UTType.text]) { result in
+//                        switch result {
+//                        case .success(let url):
+//                            if url.startAccessingSecurityScopedResource() {
+//                                let localUrl = copyToDocumentDirectory(sourceUrl: url)
+//                                if let localUrl = localUrl {
+//                                    print(localUrl)
+//                                    attachedFileUrl = localUrl
+//                                }
+//                                showingAlert.toggle()
+//                            }
+//                            url.stopAccessingSecurityScopedResource()
+//                        case .failure(let error):
+//                            print(error.localizedDescription)
+//                        }
+//                    }
+//                    .alert("Name Attached File", isPresented: $showingAlert) {
+//                        TextField("File name", text: $attachedFileName)
+//                        Button("Attach") {
+//                            let file = AttachedFile(title: attachedFileName, url: attachedFileUrl!)
+//                            print(file)
+//                            track.attachedFiles.append(file)
+//                        }
+//                        Button("Cancel", role: .cancel) {
+//                            attachedFileName = ""
+//                            attachedFileUrl = nil
+//                        }
+//                    } message: {
+//                        Text("This name will be an in-app display name. External file names will remain unchanged.")
+//                    }
+//                    
+//                } header: {
+//                    Text("Attached Files")
+//                }
                 
                 Section {
                     TextEditor(text: $track.lyrics)
-                        .frame(minHeight: 500)
+                        .frame(minHeight: 300)
                         .scrollDismissesKeyboard(.interactively)
                         .focused($keyboardFocus, equals: .lyrics)
                 } header: {
                     Text("Lyrics")
                 }
             }
-            .navigationTitle("Edit Track")
+            .navigationTitle(track.title)
             .navigationBarTitleDisplayMode(.inline)
             .zIndex(1)
             .toolbar {
@@ -175,39 +218,33 @@ struct TrackEditorView: View {
                     }
                 }
                 
-//                ToolbarItem {
-//                    Button(action: {
-//                        withAnimation {
-//                            showingAudioPlayer.toggle()
-//                        }
-//                    }) {
-//                        Image(systemName: showingAudioPlayer ? "hifispeaker.2.fill" : "hifispeaker.2")
-//                    }
-//                }
             }
-//            .onAppear {
-//                if track.audioUrl != nil {
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-//                        withAnimation { showingAudioPlayer = true }
-//                    }
-//                }
-//            }
-            
-            // old audio player location
             
         }
     }
     
-    func deleteFiles(_ indexSet: IndexSet) {
-        for i in indexSet {
-            print("\nRemoving file at \(track.attachedFiles[i].url!)...")
-            deleteFromDocumentDirectory(at: track.attachedFiles[i].url!)
-            print("Done.\n")
-        }
-        track.attachedFiles.remove(atOffsets: indexSet)
-    }
+//    func deleteFiles(_ indexSet: IndexSet) {
+//        for i in indexSet {
+//            print("\nRemoving file at \(track.attachedFiles[i].url!)...")
+//            deleteFromDocumentDirectory(at: track.attachedFiles[i].url!)
+//            print("Done.\n")
+//        }
+//        track.attachedFiles.remove(atOffsets: indexSet)
+//    }
+//    
+//    func moveFiles(from source: IndexSet, to destination: Int) {
+//        track.attachedFiles.move(fromOffsets: source, toOffset: destination)
+//    }
     
-    func moveFiles(from source: IndexSet, to destination: Int) {
-        track.attachedFiles.move(fromOffsets: source, toOffset: destination)
+    func deleteAudioUrl() {
+        if audioManager.currentTrack == track {
+            audioManager.stopAudioPlayer()
+        }
+        deleteFromDocumentDirectory(at: track.audioUrl!)
+        track.audioUrl = nil
+        
+        if audioManager.currentTrack == track {
+            audioManager.resetPlayer()
+        }
     }
 }

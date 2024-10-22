@@ -10,30 +10,40 @@ import SwiftData
 import AVFoundation
 
 struct LargeAudioPlayer: View {
-    @Bindable var audioManager: AudioManager
+    @Environment(AudioManager.self) var audioManager
     @State private var presentFileImporter = false
     @Query(sort: \Album.title) var albums: [Album]
     @State private var isEditing: Bool = false
     @State private var showingAlert: Bool = false
     
     
-    private let displayTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    
-    var formattedTime: String {
-        let hours = Int(audioManager.currentFileLength) / 3600
-        let minutes = (Int(audioManager.currentFileLength) % 3600) / 60
-        let seconds = Int(audioManager.currentFileLength) % 60
+    private var trackTitle: String {
+        guard let title = audioManager.currentTrack?.title else { return "Unknown Track" }
         
-        return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+        if title == "" {
+            return "Unknown Track"
+        } else {
+            return "\(title)"
+        }
     }
     
     private var albumTitle: String {
-        guard let title = audioManager.currentTrack?.album?.title else { return "" }
+        guard let title = audioManager.currentTrack?.album?.title else { return " - Unknown Album" }
         
         if title == "" {
-            return ""
+            return " - Unknown Album"
         } else {
             return " - \(title)"
+        }
+    }
+    
+    private var artist: String {
+        guard let artist = audioManager.currentTrack?.album?.artist else { return "Unknown Artist" }
+        
+        if artist == "" {
+            return "Unknown Artist"
+        } else {
+            return "\(artist)"
         }
     }
     
@@ -52,14 +62,14 @@ struct LargeAudioPlayer: View {
                     
                     VStack(alignment: .leading, spacing: 0) {
                         MarqueeText(
-                            "\(track.title)",
-                            width: .infinity,
+                            "\(trackTitle)",
+                            width: 325,
                             height: 30
                         )
                         .font(.title2)
                         MarqueeText(
-                            "\(album.artist)\(albumTitle)",
-                            width: .infinity,
+                            "\(artist)\(albumTitle)",
+                            width: 325,
                             height: 20
                         )
                         .font(.headline)
@@ -70,17 +80,11 @@ struct LargeAudioPlayer: View {
                 Spacer()
                 
                 AudioSlider(
-                    duration: audioManager.currentFileLength,
-                    currentTime: .init(
-                        get: { audioManager.audioPlayer?.currentTime ?? 0 },
-                        set: { _ in }
-                    ),
                     onEditingChanged: { editing in
                         isEditing = editing
                     },
                     onSeek: { time in
-                        audioManager.audioPlayer?.currentTime = time
-                        audioManager.updateNowPlayingData()
+                        audioManager.seek(to: time)
                     }
                 )
                 .padding()
@@ -181,6 +185,9 @@ struct LargeAudioPlayer: View {
             .padding()
         } else {
             Text("To use the audio player, create an album and add a track.")
+                .font(.subheadline)
+                .multilineTextAlignment(.center)
+                .padding()
         }
         
     }
@@ -206,8 +213,7 @@ struct LargeAudioPlayer: View {
         audioManager.stopAudioPlayer()
         deleteFromDocumentDirectory(at: track.audioUrl!)
         track.audioUrl = nil
-        audioManager.currentFileLength = 0
-        audioManager.currentFileName = "Import an audio file below"
+        audioManager.resetPlayer()
     }
 }
 

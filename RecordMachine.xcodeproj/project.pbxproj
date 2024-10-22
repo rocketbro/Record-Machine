@@ -13,7 +13,7 @@
 		AC3B91702B58376C005BACD0 /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3B916F2B58376C005BACD0 /* PDFView.swift */; };
 		AC45A0F92B597E020013EFAB /* DocDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC45A0F82B597E020013EFAB /* DocDirectory.swift */; };
 		AC45A0FD2B59925F0013EFAB /* RecordPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC45A0FC2B59925F0013EFAB /* RecordPlayerView.swift */; };
-		AC5D905A2B49AD7A00FA3117 /* AudioFilePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5D90592B49AD7A00FA3117 /* AudioFilePlayer.swift */; };
+		AC5D905A2B49AD7A00FA3117 /* MiniAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5D90592B49AD7A00FA3117 /* MiniAudioPlayer.swift */; };
 		AC6421FE2B52657200DBE891 /* MusicGenre.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6421FD2B52657200DBE891 /* MusicGenre.swift */; };
 		ACC1407A2CC6AD8600213CC4 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC140792CC6AD8600213CC4 /* AudioManager.swift */; };
 		ACC1407C2CC6AE4200213CC4 /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC1407B2CC6AE4200213CC4 /* MiniPlayerView.swift */; };
@@ -39,7 +39,7 @@
 		AC3B916F2B58376C005BACD0 /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
 		AC45A0F82B597E020013EFAB /* DocDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocDirectory.swift; sourceTree = "<group>"; };
 		AC45A0FC2B59925F0013EFAB /* RecordPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordPlayerView.swift; sourceTree = "<group>"; };
-		AC5D90592B49AD7A00FA3117 /* AudioFilePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFilePlayer.swift; sourceTree = "<group>"; };
+		AC5D90592B49AD7A00FA3117 /* MiniAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAudioPlayer.swift; sourceTree = "<group>"; };
 		AC6421FD2B52657200DBE891 /* MusicGenre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicGenre.swift; sourceTree = "<group>"; };
 		ACC140792CC6AD8600213CC4 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		ACC1407B2CC6AE4200213CC4 /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
@@ -131,7 +131,7 @@
 				ACF75AAD2B45EBFB0071633B /* AlbumEditorView.swift */,
 				ACF75AAF2B4671160071633B /* TrackEditorView.swift */,
 				ACF75AB12B46809D0071633B /* Theme.swift */,
-				AC5D90592B49AD7A00FA3117 /* AudioFilePlayer.swift */,
+				AC5D90592B49AD7A00FA3117 /* MiniAudioPlayer.swift */,
 				AC3B916F2B58376C005BACD0 /* PDFView.swift */,
 				AC06C3492B58B07600B1F395 /* AttachedFileView.swift */,
 				AC45A0FC2B59925F0013EFAB /* RecordPlayerView.swift */,
@@ -218,7 +218,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC5D905A2B49AD7A00FA3117 /* AudioFilePlayer.swift in Sources */,
+				AC5D905A2B49AD7A00FA3117 /* MiniAudioPlayer.swift in Sources */,
 				ACC1407E2CC6B15200213CC4 /* AlbumImage.swift in Sources */,
 				ACF75AAE2B45EBFB0071633B /* AlbumEditorView.swift in Sources */,
 				AC06C3482B58A7F400B1F395 /* AttachedFile.swift in Sources */,
