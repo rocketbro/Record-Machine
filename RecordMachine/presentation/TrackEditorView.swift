@@ -12,11 +12,10 @@ import UniformTypeIdentifiers
 
 struct TrackEditorView: View {
     @Environment(\.modelContext) var modelContext
+    @Environment(AudioManager.self) var audioManager
     @Bindable var track: Track
     @Binding var path: NavigationPath
     @Query var albums: [Album]
-    @State private var audioFileName: String = "Import an audio file"
-    @State private var showingAudioPlayer = false
     @State private var presentPdfImporter = false
     
     @State private var showingAlert = false
@@ -161,6 +160,14 @@ struct TrackEditorView: View {
             .zIndex(1)
             .toolbar {
                 
+                ToolbarItem {
+                    Button("Toggle Player", systemImage: "ipod") {
+                        withAnimation {
+                            audioManager.showingPlayer.toggle()
+                        }
+                    }
+                }
+                
                 if keyboardFocus == .trackNotes || keyboardFocus == .lyrics {
                     ToolbarItemGroup(placement: .keyboard) {
                         Spacer()
@@ -168,36 +175,25 @@ struct TrackEditorView: View {
                     }
                 }
                 
-                ToolbarItem {
-                    Button(action: {
-                        withAnimation {
-                            showingAudioPlayer.toggle()
-                        }
-                    }) {
-                        Image(systemName: showingAudioPlayer ? "hifispeaker.2.fill" : "hifispeaker.2")
-                    }
-                }
+//                ToolbarItem {
+//                    Button(action: {
+//                        withAnimation {
+//                            showingAudioPlayer.toggle()
+//                        }
+//                    }) {
+//                        Image(systemName: showingAudioPlayer ? "hifispeaker.2.fill" : "hifispeaker.2")
+//                    }
+//                }
             }
-            .onAppear {
-                if track.audioUrl != nil {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        withAnimation { showingAudioPlayer = true }
-                    }
-                }
-            }
+//            .onAppear {
+//                if track.audioUrl != nil {
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+//                        withAnimation { showingAudioPlayer = true }
+//                    }
+//                }
+//            }
             
-            if showingAudioPlayer {
-                withAnimation {
-                    VStack {
-                        Spacer()
-                        AudioFilePlayer(track: track, fileName: $audioFileName)
-                            .padding(.horizontal)
-                            .shadow(color: .black.opacity(0.35), radius: 20)
-                            .transition(.move(edge: .bottom))
-                    }
-                    .zIndex(2)
-                }
-            }
+            // old audio player location
             
         }
     }

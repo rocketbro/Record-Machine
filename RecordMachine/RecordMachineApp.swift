@@ -11,6 +11,8 @@ import AVFoundation
 
 @main
 struct RecordMachineApp: App {
+    @State private var audioManager = AudioManager()
+    
     init() {
         configureAudioSession()
     }
@@ -18,6 +20,7 @@ struct RecordMachineApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(audioManager)
                 .monospaced()
                 .preferredColorScheme(.dark)
         }.modelContainer(for: Album.self)
