@@ -19,6 +19,8 @@
 		ACC1407C2CC6AE4200213CC4 /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC1407B2CC6AE4200213CC4 /* MiniPlayerView.swift */; };
 		ACC1407E2CC6B15200213CC4 /* AlbumImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC1407D2CC6B15200213CC4 /* AlbumImage.swift */; };
 		ACC140802CC6D90200213CC4 /* MarqueeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC1407F2CC6D90200213CC4 /* MarqueeText.swift */; };
+		ACC140822CC77B0900213CC4 /* LargeAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC140812CC77B0900213CC4 /* LargeAudioPlayer.swift */; };
+		ACC140842CC7854900213CC4 /* AudioSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC140832CC7854900213CC4 /* AudioSlider.swift */; };
 		ACF75A992B45E0300071633B /* RecordMachineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75A982B45E0300071633B /* RecordMachineApp.swift */; };
 		ACF75A9B2B45E0300071633B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75A9A2B45E0300071633B /* ContentView.swift */; };
 		ACF75A9D2B45E0320071633B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACF75A9C2B45E0320071633B /* Assets.xcassets */; };
@@ -43,6 +45,8 @@
 		ACC1407B2CC6AE4200213CC4 /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
 		ACC1407D2CC6B15200213CC4 /* AlbumImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumImage.swift; sourceTree = "<group>"; };
 		ACC1407F2CC6D90200213CC4 /* MarqueeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarqueeText.swift; sourceTree = "<group>"; };
+		ACC140812CC77B0900213CC4 /* LargeAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeAudioPlayer.swift; sourceTree = "<group>"; };
+		ACC140832CC7854900213CC4 /* AudioSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSlider.swift; sourceTree = "<group>"; };
 		ACF75A952B45E0300071633B /* RecordMachine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecordMachine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACF75A982B45E0300071633B /* RecordMachineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMachineApp.swift; sourceTree = "<group>"; };
 		ACF75A9A2B45E0300071633B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -134,6 +138,8 @@
 				ACC1407B2CC6AE4200213CC4 /* MiniPlayerView.swift */,
 				ACC1407D2CC6B15200213CC4 /* AlbumImage.swift */,
 				ACC1407F2CC6D90200213CC4 /* MarqueeText.swift */,
+				ACC140812CC77B0900213CC4 /* LargeAudioPlayer.swift */,
+				ACC140832CC7854900213CC4 /* AudioSlider.swift */,
 			);
 			path = presentation;
 			sourceTree = "<group>";
@@ -220,6 +226,7 @@
 				AC6421FE2B52657200DBE891 /* MusicGenre.swift in Sources */,
 				ACF75A9B2B45E0300071633B /* ContentView.swift in Sources */,
 				ACF75AB02B4671160071633B /* TrackEditorView.swift in Sources */,
+				ACC140842CC7854900213CC4 /* AudioSlider.swift in Sources */,
 				AC45A0FD2B59925F0013EFAB /* RecordPlayerView.swift in Sources */,
 				AC06C34A2B58B07600B1F395 /* AttachedFileView.swift in Sources */,
 				ACF75A992B45E0300071633B /* RecordMachineApp.swift in Sources */,
@@ -227,6 +234,7 @@
 				ACF75AB22B46809D0071633B /* Theme.swift in Sources */,
 				ACC1407C2CC6AE4200213CC4 /* MiniPlayerView.swift in Sources */,
 				ACC140802CC6D90200213CC4 /* MarqueeText.swift in Sources */,
+				ACC140822CC77B0900213CC4 /* LargeAudioPlayer.swift in Sources */,
 				AC3B91702B58376C005BACD0 /* PDFView.swift in Sources */,
 				ACC1407A2CC6AD8600213CC4 /* AudioManager.swift in Sources */,
 				AC3B916E2B5835AD005BACD0 /* MusicKey.swift in Sources */,

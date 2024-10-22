@@ -35,14 +35,3 @@ class Track {
         self.attachedFiles = attachedFiles
     }
 }
-
-extension Track {
-    var persistentIdentifier: PersistentIdentifier {
-        persistentBackingData.persistentModelID!
-    }
-    
-    static func lookup(_ identifier: PersistentIdentifier,
-                      context: ModelContext) -> Track? {
-        return context.model(for: identifier) as? Track
-    }
-}

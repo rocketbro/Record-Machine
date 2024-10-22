@@ -12,7 +12,7 @@ import AVFoundation
 import MediaPlayer
 
 @Observable final class AudioManager: NSObject, Sendable, AVAudioPlayerDelegate {
-    private var audioPlayer: AVAudioPlayer?
+    var audioPlayer: AVAudioPlayer?
     var showingPlayer: Bool = false
     var currentFileLength: Double = 0
     var currentFileName: String = "Import an audio file below"
@@ -20,6 +20,14 @@ import MediaPlayer
     var queue: [Track] = []
     var isPlaying: Bool = false
     var showFullPlayer: Bool = false
+    
+    var sheetBinding: Binding<Bool> {
+            Binding(
+                get: { self.showFullPlayer },
+                set: { self.showFullPlayer = $0 }
+            )
+        }
+    
     private var isObserving: Bool = false
     private var observationTask: Task<Void, Never>?
     
@@ -125,7 +133,7 @@ import MediaPlayer
         return processedImage
     }
     
-    private func updateNewTrackData() {
+    func updateNewTrackData() {
         var nowPlayingInfo = [String: Any]()
         
         if let track = currentTrack {
@@ -151,7 +159,7 @@ import MediaPlayer
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
     
-    private func updateNowPlayingData() {
+    func updateNowPlayingData() {
         var nowPlayingInfo = [String: Any]()
         // Playback information - ensure numeric values are NSNumber
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = NSNumber(value: currentFileLength)
@@ -351,5 +359,12 @@ import MediaPlayer
     
     deinit {
         stopObservation()
+    }
+}
+
+extension AudioManager {
+    func seek(to time: Double) {
+        audioPlayer?.currentTime = time
+        updateNowPlayingData()
     }
 }

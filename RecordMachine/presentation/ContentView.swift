@@ -60,6 +60,9 @@ struct ContentView: View {
                         }
                     }
                 }
+                .sheet(isPresented: audioManager.sheetBinding) {
+                    LargeAudioPlayer(audioManager: audioManager)
+                }
             }
             
             if audioManager.showingPlayer {
@@ -67,7 +70,7 @@ struct ContentView: View {
                     VStack {
                         Spacer()
                         AudioFilePlayer(audioManager: audioManager)
-                            .padding(.horizontal)
+                            .padding(.horizontal, 6)
                             .shadow(color: .black.opacity(0.35), radius: 20)
                             .transition(.move(edge: .bottom))
                             .onAppear {
@@ -75,6 +78,9 @@ struct ContentView: View {
                                     guard let album = albums.first else { return }
                                     audioManager.loadQueue(for: album)
                                 }
+                            }
+                            .onTapGesture {
+                                audioManager.showFullPlayer.toggle()
                             }
                     }
                     .zIndex(2)
