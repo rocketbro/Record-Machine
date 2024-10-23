@@ -64,13 +64,13 @@ struct LargeAudioPlayer: View {
                         MarqueeText(
                             "\(trackTitle)",
                             width: 325,
-                            height: 30
+                            height: 35
                         )
                         .font(.title2)
                         MarqueeText(
                             "\(artist)\(albumTitle)",
                             width: 325,
-                            height: 20
+                            height: 30
                         )
                         .font(.headline)
                     }

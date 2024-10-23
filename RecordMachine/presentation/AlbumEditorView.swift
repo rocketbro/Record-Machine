@@ -16,7 +16,6 @@ struct AlbumEditorView: View {
     @Bindable var album: Album
     @Binding var navPath: NavigationPath
     @State private var artworkSelection: PhotosPickerItem?
-    @State private var runAnimation: Bool = false
     
     enum KeyboardFocus {
         case title, artist, linerNotes
@@ -166,19 +165,10 @@ struct AlbumEditorView: View {
             Section {
                 List {
                     ForEach(orderedTracks) { track in
-                        TrackListItem(track: track, trackList: orderedTracks, runAnimation: $runAnimation)
+                        TrackListItem(track: track, trackList: orderedTracks)
                     }
                     .onDelete(perform: deleteTracks)
                     .onMove(perform: moveTrack)
-                    .onChange(of: audioManager.isPlaying) {
-                        withAnimation {
-                            if audioManager.isPlaying {
-                                runAnimation = true
-                            } else {
-                                runAnimation = false
-                            }
-                        }
-                    }
                 }
                 
                 
@@ -276,9 +266,8 @@ struct AlbumEditorView: View {
     
     func playAlbum() {
         withAnimation {
-            audioManager.loadQueue(for: album)
-            if !audioManager.isPlaying {
-                audioManager.playPause()
+            if let track = orderedTracks.first {
+                audioManager.playTrack(track, tracklist: orderedTracks)
             }
             if !audioManager.showingPlayer {
                 audioManager.showingPlayer.toggle()

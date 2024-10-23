@@ -11,7 +11,7 @@ struct TrackListItem: View {
     @Environment(AudioManager.self) var audioManager
     let track: Track
     let trackList: [Track]
-    @Binding var runAnimation: Bool
+    @State private var runAnimation: Bool = false
     
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
@@ -27,21 +27,40 @@ struct TrackListItem: View {
                     .foregroundStyle(.gray)
             }
             
-            // Song Title
-            Text("\(track.title.isEmpty ? "Unknown Track" : track.title)")
-                .onTapGesture {
-                    audioManager.playTrack(track, tracklist: trackList)
-                    if !audioManager.showingPlayer {
-                        withAnimation {
-                            audioManager.showingPlayer.toggle()
-                        }
+            Group {
+                // Song Title
+                Text("\(track.title.isEmpty ? "Unknown Track" : track.title)")
+                
+                Spacer()
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                audioManager.playTrack(track, tracklist: trackList)
+                if !audioManager.showingPlayer {
+                    withAnimation {
+                        audioManager.showingPlayer.toggle()
                     }
                 }
-            
-            Spacer()
+            }
             
             // Menu
             TrackMenu(track: track)
+        }
+        .onChange(of: audioManager.isPlaying) {
+            withAnimation {
+                if audioManager.isPlaying {
+                    runAnimation = true
+                } else {
+                    runAnimation = false
+                }
+            }
+        }
+        .onAppear {
+            if audioManager.isPlaying {
+                withAnimation {
+                    runAnimation = true
+                }
+            }
         }
     }
 }
