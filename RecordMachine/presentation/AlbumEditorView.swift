@@ -16,6 +16,7 @@ struct AlbumEditorView: View {
     @Bindable var album: Album
     @Binding var navPath: NavigationPath
     @State private var artworkSelection: PhotosPickerItem?
+    @State private var runAnimation: Bool = false
     
     enum KeyboardFocus {
         case title, artist, linerNotes
@@ -165,12 +166,19 @@ struct AlbumEditorView: View {
             Section {
                 List {
                     ForEach(orderedTracks) { track in
-                        NavigationLink(value: track) {
-                            Text("\((orderedTracks.firstIndex(of: track) ?? 0) + 1). \(track.title.isEmpty ? "Unknown Track" : track.title)")
-                        }
+                        TrackListItem(track: track, trackList: orderedTracks, runAnimation: $runAnimation)
                     }
                     .onDelete(perform: deleteTracks)
                     .onMove(perform: moveTrack)
+                    .onChange(of: audioManager.isPlaying) {
+                        withAnimation {
+                            if audioManager.isPlaying {
+                                runAnimation = true
+                            } else {
+                                runAnimation = false
+                            }
+                        }
+                    }
                 }
                 
                 

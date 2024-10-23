@@ -111,6 +111,7 @@ struct LargeAudioPlayer: View {
                             .frame(width: 50, height: 50)
                             .tint(.white)
                     }
+                    .contentTransition(.symbolEffect(.replace))
                     .disabled(track.audioUrl == nil)
                     
                     Spacer()

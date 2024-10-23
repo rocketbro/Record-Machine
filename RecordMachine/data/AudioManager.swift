@@ -206,6 +206,30 @@ import MediaPlayer
         }
     }
     
+    func playTrack(_ track: Track, tracklist: [Track]) {
+        resetPlayer()
+        var newQueue: [Track] = [track]
+        if tracklist.contains(track) {
+            for t in tracklist {
+                if tracklist.firstIndex(of: t)! > tracklist.firstIndex(of: track)! {
+                    newQueue.append(t)
+                }
+            }
+        }
+        self.currentTrack = track
+        self.queue = newQueue
+        prepareAudioPlayer()
+        
+        guard let _ = currentTrack?.audioUrl else {
+            stopAudioPlayer()
+            return
+        }
+        guard let audioPlayer = audioPlayer else { return }
+        audioPlayer.play()
+        self.isPlaying = true
+
+    }
+    
     func playPause() {
         if let audioPlayer = audioPlayer {
             if audioPlayer.isPlaying {
