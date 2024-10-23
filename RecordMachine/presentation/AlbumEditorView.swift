@@ -258,6 +258,9 @@ struct AlbumEditorView: View {
     }
     
     func iPod() {
+        if audioManager.currentTrack == nil {
+            audioManager.loadQueue(for: album)
+        }
         withAnimation {
             audioManager.showingPlayer.toggle()
         }

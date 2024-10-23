@@ -69,16 +69,43 @@ struct MiniAudioPlayer: View {
                         
                         Spacer()
                         
-                        Button(action: audioManager.playPause) {
-                            Image(systemName: audioManager.isPlaying ? "pause.fill" : "play.fill")
-                                .font(.title2)
-                                .frame(width: 24, height: 6)
-                                .padding()
-                                .background(.gray.opacity(0.25))
-                                .cornerRadius(4)
-                                .tint(.green)
+                        if track.audioUrl != nil {
+                            Button(action: audioManager.playPause) {
+                                Image(systemName: audioManager.isPlaying ? "pause.fill" : "play.fill")
+                                    .font(.title2)
+                                    .frame(width: 24, height: 6)
+                                    .padding()
+                                    .background(.gray.opacity(0.25))
+                                    .cornerRadius(4)
+                                    .tint(.green)
+                            }
+                            .disabled(track.audioUrl == nil)
+                        } else {
+                            Button(action: { presentFileImporter.toggle() }) {
+                                Image(systemName: "waveform.badge.plus")
+                                    .font(.title2)
+                                    .frame(width: 24, height: 6)
+                                    .padding()
+                                    .background(.gray.opacity(0.25))
+                                    .cornerRadius(4)
+                                    .tint(.white)
+                            }.fileImporter(isPresented: $presentFileImporter, allowedContentTypes: [UTType.mp3, UTType.mpeg4Audio, UTType.aiff, UTType.wav, UTType.audio]) { result in
+                                switch result {
+                                case .success(let url):
+                                    if url.startAccessingSecurityScopedResource() {
+                                        let localUrl = copyToDocumentDirectory(sourceUrl: url)
+                                        if let localUrl = localUrl {
+                                            print(localUrl)
+                                            track.audioUrl = localUrl
+                                        }
+                                        audioManager.prepareAudioPlayer()
+                                    }
+                                    url.stopAccessingSecurityScopedResource()
+                                case .failure(let error):
+                                    print(error)
+                                }
+                            }
                         }
-                        .disabled(track.audioUrl == nil)
                         
                         Button(action: skip) {
                             Image(systemName: "forward.fill")
