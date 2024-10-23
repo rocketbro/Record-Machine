@@ -38,11 +38,49 @@ struct AlbumEditorView: View {
                 VStack(alignment: .center) {
                     AlbumImage(album: album)
                     
-                    Text(album.title.isEmpty ? "Unknown Album" : album.title)
-                        .font(.title.bold())
+                    TextField("Add Title", text: $album.title)
+                        .font(.largeTitle.bold())
+                        .focused($keyboardFocus, equals: .title)
+                        .submitLabel(.done)
+                        .onSubmit { keyboardFocus = nil }
                     
-                    Text(album.artist.isEmpty ? "Unknown Artist" : album.artist)
+                    TextField("Add Artist", text: $album.artist)
                         .font(.headline)
+                        .focused($keyboardFocus, equals: .artist)
+                        .submitLabel(.done)
+                        .onSubmit { keyboardFocus = nil }
+                    
+                    HStack {
+                        
+                        Button(action: playAlbum, label: {
+                            Text("\(Image(systemName: "play.fill")) Play")
+                                .frame(maxWidth: .infinity)
+                                .bold()
+                        })
+                        .buttonStyle(.bordered)
+                        .controlSize(.large)
+                        
+                        PhotosPicker(selection: $artworkSelection, matching: .not(.videos)) {
+                            Text("\(Image(systemName: "photo")) Artwork")
+                                .frame(maxWidth: .infinity)
+                                .bold()
+                        }
+                        .photosPickerStyle(.presentation)
+                        .buttonStyle(.bordered)
+                        .controlSize(.large)
+                        
+                        .onChange(of: artworkSelection) {
+                            Task {
+                                if let loaded = try? await artworkSelection?.loadTransferable(type: Data.self) {
+                                    album.artwork = loaded
+                                } else {
+                                    print("Artwork load failed")
+                                }
+                            }
+                        }
+                    }
+                    .padding(.vertical)
+                    .monospaced(false)
                 }
                 .frame(maxWidth: .infinity)
                 .listRowBackground(Color.clear)
@@ -54,11 +92,49 @@ struct AlbumEditorView: View {
                     AlbumImage(album: album, width: 400, height: 400)
                     Spacer()
                     VStack(alignment: .center) {
-                        Text(album.title.isEmpty ? "Unknown Album" : album.title)
+                        TextField("Add Title", text: $album.title)
                             .font(.largeTitle.bold())
+                            .focused($keyboardFocus, equals: .title)
+                            .submitLabel(.done)
+                            .onSubmit { keyboardFocus = nil }
                         
-                        Text(album.artist.isEmpty ? "Unknown Artist" : album.artist)
+                        TextField("Add Artist", text: $album.artist)
                             .font(.headline)
+                            .focused($keyboardFocus, equals: .artist)
+                            .submitLabel(.done)
+                            .onSubmit { keyboardFocus = nil }
+                        
+                        HStack {
+                            
+                            Button(action: playAlbum, label: {
+                                Text("\(Image(systemName: "play.fill")) Play")
+                                    .frame(maxWidth: .infinity)
+                                    .bold()
+                            })
+                            .buttonStyle(.bordered)
+                            .controlSize(.large)
+                            
+                            PhotosPicker(selection: $artworkSelection, matching: .not(.videos)) {
+                                Text("\(Image(systemName: "photo")) Artwork")
+                                    .frame(maxWidth: .infinity)
+                                    .bold()
+                            }
+                            .photosPickerStyle(.presentation)
+                            .buttonStyle(.bordered)
+                            .controlSize(.large)
+                            
+                            .onChange(of: artworkSelection) {
+                                Task {
+                                    if let loaded = try? await artworkSelection?.loadTransferable(type: Data.self) {
+                                        album.artwork = loaded
+                                    } else {
+                                        print("Artwork load failed")
+                                    }
+                                }
+                            }
+                        }
+                        .padding(.vertical)
+                        .monospaced(false)
                         
                     }
                     .padding(.horizontal, 55)
@@ -70,26 +146,6 @@ struct AlbumEditorView: View {
             }
             
             // MARK: Album detail editor
-            
-            Section {
-                TextField("Enter title", text: $album.title)
-                    .foregroundStyle(primaryOrange)
-                    .focused($keyboardFocus, equals: .title)
-                    .submitLabel(.done)
-                    .onSubmit { keyboardFocus = nil }
-            } header: {
-                Text("Title")
-            }
-            
-            Section {
-                TextField("Enter artist", text: $album.artist)
-                    .foregroundStyle(primaryOrange)
-                    .focused($keyboardFocus, equals: .title)
-                    .submitLabel(.done)
-                    .onSubmit { keyboardFocus = nil }
-            } header: {
-                Text("Artist")
-            }
             
             Section {
                 Picker("Genre", selection: $album.genre) {
@@ -150,28 +206,23 @@ struct AlbumEditorView: View {
                 }
             }
             
-            ToolbarItem {
-                PhotosPicker(selection: $artworkSelection, matching: .not(.videos)) {
-                    Label(
-                        hasArtwork ? "Change artwork" : "add artwork",
-                        systemImage: hasArtwork ? "photo" : "photo.badge.plus"
-                    )
-                }
-                .photosPickerStyle(.presentation)
-                .padding(.vertical)
-                .onChange(of: artworkSelection) {
-                    Task {
-                        if let loaded = try? await artworkSelection?.loadTransferable(type: Data.self) {
-                            album.artwork = loaded
-                        } else {
-                            print("Artwork load failed")
-                        }
-                    }
-                }
-            }
             
             ToolbarItem {
                 Menu {
+                    Button(action: iPod, label: {
+                        Label(audioManager.showingPlayer ? "Hide miniplayer" : "Show miniplayer", systemImage: "ipod")
+                    })
+                    
+                    Button(action: {}, label: {
+                        Label("Share album", systemImage: "square.and.arrow.up")
+                    })
+                    .disabled(true)
+                    
+                    Button(action: {}, label: {
+                        Label("Export album data", systemImage: "doc.text.image")
+                    })
+                    .disabled(true)
+                    
                     Button(role: .destructive, action: {
                         album.artwork = nil
                         artworkSelection = nil
@@ -182,12 +233,6 @@ struct AlbumEditorView: View {
                     
                 } label: {
                     Image(systemName: "ellipsis.circle")
-                }
-            }
-            
-            ToolbarItem {
-                Button(action: iPod) {
-                    Image(systemName: "ipod")
                 }
             }
         }
@@ -214,22 +259,19 @@ struct AlbumEditorView: View {
     
     func iPod() {
         withAnimation {
-            if audioManager.isPlaying {
-                if let currentTrack = audioManager.currentTrack {
-                    print(currentTrack.title)
-                    if let album = currentTrack.album {
-                        print(album.title)
-                        print(self.album == album)
-                        if album != self.album {
-                            audioManager.loadQueue(for: album)
-                        }
-                        
-                    }
-                }
-            } else {
-                audioManager.loadQueue(for: album)
-            }
             audioManager.showingPlayer.toggle()
+        }
+    }
+    
+    func playAlbum() {
+        withAnimation {
+            audioManager.loadQueue(for: album)
+            if !audioManager.isPlaying {
+                audioManager.playPause()
+            }
+            if !audioManager.showingPlayer {
+                audioManager.showingPlayer.toggle()
+            }
         }
     }
 }

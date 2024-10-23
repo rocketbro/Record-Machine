@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,15 +12,8 @@
 		AC3B916E2B5835AD005BACD0 /* MusicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3B916D2B5835AD005BACD0 /* MusicKey.swift */; };
 		AC3B91702B58376C005BACD0 /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3B916F2B58376C005BACD0 /* PDFView.swift */; };
 		AC45A0F92B597E020013EFAB /* DocDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC45A0F82B597E020013EFAB /* DocDirectory.swift */; };
-		AC45A0FD2B59925F0013EFAB /* RecordPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC45A0FC2B59925F0013EFAB /* RecordPlayerView.swift */; };
-		AC5D905A2B49AD7A00FA3117 /* MiniAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5D90592B49AD7A00FA3117 /* MiniAudioPlayer.swift */; };
 		AC6421FE2B52657200DBE891 /* MusicGenre.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6421FD2B52657200DBE891 /* MusicGenre.swift */; };
 		ACC1407A2CC6AD8600213CC4 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC140792CC6AD8600213CC4 /* AudioManager.swift */; };
-		ACC1407C2CC6AE4200213CC4 /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC1407B2CC6AE4200213CC4 /* MiniPlayerView.swift */; };
-		ACC1407E2CC6B15200213CC4 /* AlbumImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC1407D2CC6B15200213CC4 /* AlbumImage.swift */; };
-		ACC140802CC6D90200213CC4 /* MarqueeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC1407F2CC6D90200213CC4 /* MarqueeText.swift */; };
-		ACC140822CC77B0900213CC4 /* LargeAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC140812CC77B0900213CC4 /* LargeAudioPlayer.swift */; };
-		ACC140842CC7854900213CC4 /* AudioSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC140832CC7854900213CC4 /* AudioSlider.swift */; };
 		ACF75A992B45E0300071633B /* RecordMachineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75A982B45E0300071633B /* RecordMachineApp.swift */; };
 		ACF75A9B2B45E0300071633B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75A9A2B45E0300071633B /* ContentView.swift */; };
 		ACF75A9D2B45E0320071633B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACF75A9C2B45E0320071633B /* Assets.xcassets */; };
@@ -38,15 +31,8 @@
 		AC3B916D2B5835AD005BACD0 /* MusicKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicKey.swift; sourceTree = "<group>"; };
 		AC3B916F2B58376C005BACD0 /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
 		AC45A0F82B597E020013EFAB /* DocDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocDirectory.swift; sourceTree = "<group>"; };
-		AC45A0FC2B59925F0013EFAB /* RecordPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordPlayerView.swift; sourceTree = "<group>"; };
-		AC5D90592B49AD7A00FA3117 /* MiniAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAudioPlayer.swift; sourceTree = "<group>"; };
 		AC6421FD2B52657200DBE891 /* MusicGenre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicGenre.swift; sourceTree = "<group>"; };
 		ACC140792CC6AD8600213CC4 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
-		ACC1407B2CC6AE4200213CC4 /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
-		ACC1407D2CC6B15200213CC4 /* AlbumImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumImage.swift; sourceTree = "<group>"; };
-		ACC1407F2CC6D90200213CC4 /* MarqueeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarqueeText.swift; sourceTree = "<group>"; };
-		ACC140812CC77B0900213CC4 /* LargeAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeAudioPlayer.swift; sourceTree = "<group>"; };
-		ACC140832CC7854900213CC4 /* AudioSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSlider.swift; sourceTree = "<group>"; };
 		ACF75A952B45E0300071633B /* RecordMachine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecordMachine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACF75A982B45E0300071633B /* RecordMachineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMachineApp.swift; sourceTree = "<group>"; };
 		ACF75A9A2B45E0300071633B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -60,6 +46,11 @@
 		ACF75AB12B46809D0071633B /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		ACFEABFB2B85823900EA0FEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		AC16FFE72CC933540041A2BD /* audio player */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "audio player"; sourceTree = "<group>"; };
+		AC16FFE82CC939170041A2BD /* componenets */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = componenets; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		ACF75A922B45E0300071633B /* Frameworks */ = {
@@ -127,19 +118,14 @@
 		ACF75AA82B45E0460071633B /* presentation */ = {
 			isa = PBXGroup;
 			children = (
+				AC16FFE82CC939170041A2BD /* componenets */,
 				ACF75A9A2B45E0300071633B /* ContentView.swift */,
 				ACF75AAD2B45EBFB0071633B /* AlbumEditorView.swift */,
 				ACF75AAF2B4671160071633B /* TrackEditorView.swift */,
 				ACF75AB12B46809D0071633B /* Theme.swift */,
-				AC5D90592B49AD7A00FA3117 /* MiniAudioPlayer.swift */,
+				AC16FFE72CC933540041A2BD /* audio player */,
 				AC3B916F2B58376C005BACD0 /* PDFView.swift */,
 				AC06C3492B58B07600B1F395 /* AttachedFileView.swift */,
-				AC45A0FC2B59925F0013EFAB /* RecordPlayerView.swift */,
-				ACC1407B2CC6AE4200213CC4 /* MiniPlayerView.swift */,
-				ACC1407D2CC6B15200213CC4 /* AlbumImage.swift */,
-				ACC1407F2CC6D90200213CC4 /* MarqueeText.swift */,
-				ACC140812CC77B0900213CC4 /* LargeAudioPlayer.swift */,
-				ACC140832CC7854900213CC4 /* AudioSlider.swift */,
 			);
 			path = presentation;
 			sourceTree = "<group>";
@@ -158,6 +144,10 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				AC16FFE72CC933540041A2BD /* audio player */,
+				AC16FFE82CC939170041A2BD /* componenets */,
 			);
 			name = RecordMachine;
 			packageProductDependencies = (
@@ -218,23 +208,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC5D905A2B49AD7A00FA3117 /* MiniAudioPlayer.swift in Sources */,
-				ACC1407E2CC6B15200213CC4 /* AlbumImage.swift in Sources */,
 				ACF75AAE2B45EBFB0071633B /* AlbumEditorView.swift in Sources */,
 				AC06C3482B58A7F400B1F395 /* AttachedFile.swift in Sources */,
 				ACF75AAC2B45E0A30071633B /* Track.swift in Sources */,
 				AC6421FE2B52657200DBE891 /* MusicGenre.swift in Sources */,
 				ACF75A9B2B45E0300071633B /* ContentView.swift in Sources */,
 				ACF75AB02B4671160071633B /* TrackEditorView.swift in Sources */,
-				ACC140842CC7854900213CC4 /* AudioSlider.swift in Sources */,
-				AC45A0FD2B59925F0013EFAB /* RecordPlayerView.swift in Sources */,
 				AC06C34A2B58B07600B1F395 /* AttachedFileView.swift in Sources */,
 				ACF75A992B45E0300071633B /* RecordMachineApp.swift in Sources */,
 				ACF75AAA2B45E0560071633B /* Album.swift in Sources */,
 				ACF75AB22B46809D0071633B /* Theme.swift in Sources */,
-				ACC1407C2CC6AE4200213CC4 /* MiniPlayerView.swift in Sources */,
-				ACC140802CC6D90200213CC4 /* MarqueeText.swift in Sources */,
-				ACC140822CC77B0900213CC4 /* LargeAudioPlayer.swift in Sources */,
 				AC3B91702B58376C005BACD0 /* PDFView.swift in Sources */,
 				ACC1407A2CC6AD8600213CC4 /* AudioManager.swift in Sources */,
 				AC3B916E2B5835AD005BACD0 /* MusicKey.swift in Sources */,
