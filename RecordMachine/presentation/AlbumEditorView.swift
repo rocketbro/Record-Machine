@@ -214,15 +214,15 @@ struct AlbumEditorView: View {
                         Label(audioManager.showingPlayer ? "Hide miniplayer" : "Show miniplayer", systemImage: "ipod")
                     })
                     
-                    Button(action: {}, label: {
-                        Label("Share album", systemImage: "square.and.arrow.up")
-                    })
-                    .disabled(true)
-                    
-                    Button(action: {}, label: {
-                        Label("Export album data", systemImage: "doc.text.image")
-                    })
-                    .disabled(true)
+//                    Button(action: {}, label: {
+//                        Label("Share album", systemImage: "square.and.arrow.up")
+//                    })
+//                    .disabled(true)
+//                    
+//                    Button(action: {}, label: {
+//                        Label("Export album data", systemImage: "doc.text.image")
+//                    })
+//                    .disabled(true)
                     
                     Button(role: .destructive, action: {
                         album.artwork = nil

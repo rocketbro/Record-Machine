@@ -16,13 +16,14 @@ struct TrackMenu: View {
                 Label("Edit track details", systemImage: "pencil")
             }
             
-            Button(action: {}, label: {
-                Label("Share track", systemImage: "square.and.arrow.up")
-            }).disabled(true)
+//            Button(action: {}, label: {
+//                Label("Share track", systemImage: "square.and.arrow.up")
+//            }).disabled(true)
             
         } label: {
             Image(systemName: "ellipsis")
                 .tint(.white)
+                .contentShape(Rectangle())
         }
     }
 }
