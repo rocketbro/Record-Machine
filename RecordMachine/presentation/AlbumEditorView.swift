@@ -73,6 +73,7 @@ struct AlbumEditorView: View {
                             Task {
                                 if let loaded = try? await artworkSelection?.loadTransferable(type: Data.self) {
                                     album.artwork = loaded
+                                    audioManager.updateNewTrackData()
                                 } else {
                                     print("Artwork load failed")
                                 }
@@ -127,6 +128,7 @@ struct AlbumEditorView: View {
                                 Task {
                                     if let loaded = try? await artworkSelection?.loadTransferable(type: Data.self) {
                                         album.artwork = loaded
+                                        audioManager.updateNewTrackData()
                                     } else {
                                         print("Artwork load failed")
                                     }
@@ -225,6 +227,7 @@ struct AlbumEditorView: View {
                     Button(role: .destructive, action: {
                         album.artwork = nil
                         artworkSelection = nil
+                        audioManager.updateNewTrackData()
                     }) {
                         Label("Delete artwork", systemImage: "trash")
                     }
@@ -277,7 +280,7 @@ struct AlbumEditorView: View {
     func playAlbum() {
         withAnimation {
             if let track = orderedTracks.first {
-                audioManager.playTrack(track, tracklist: orderedTracks)
+                audioManager.playTrack(track)
             }
             if !audioManager.showingPlayer {
                 audioManager.showingPlayer.toggle()

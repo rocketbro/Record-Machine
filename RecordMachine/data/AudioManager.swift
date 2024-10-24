@@ -206,8 +206,9 @@ import MediaPlayer
         }
     }
     
-    func playTrack(_ track: Track, tracklist: [Track]) {
+    func playTrack(_ track: Track) {
         resetPlayer()
+        let tracklist = track.album!.trackListing.sorted(by: { $0.index < $1.index })
         self.queue = tracklist
         self.currentTrack = queue[queue.firstIndex(of: track) ?? 0]
         prepareAudioPlayer()

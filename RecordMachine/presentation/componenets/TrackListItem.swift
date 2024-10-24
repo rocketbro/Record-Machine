@@ -35,7 +35,7 @@ struct TrackListItem: View {
             }
             .contentShape(Rectangle())
             .onTapGesture {
-                audioManager.playTrack(track, tracklist: trackList)
+                audioManager.playTrack(track)
                 if !audioManager.showingPlayer {
                     withAnimation {
                         audioManager.showingPlayer.toggle()

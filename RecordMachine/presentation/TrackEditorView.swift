@@ -110,6 +110,9 @@ struct TrackEditorView: View {
                                 if let localUrl = localUrl {
                                     print(localUrl)
                                     track.audioUrl = localUrl
+                                    if !audioManager.isPlaying || audioManager.currentTrack == track {
+                                        audioManager.prepareAudioPlayer()
+                                    }
                                 }
                             }
                             url.stopAccessingSecurityScopedResource()
