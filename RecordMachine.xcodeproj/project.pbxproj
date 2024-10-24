@@ -14,6 +14,7 @@
 		AC45A0F92B597E020013EFAB /* DocDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC45A0F82B597E020013EFAB /* DocDirectory.swift */; };
 		AC6421FE2B52657200DBE891 /* MusicGenre.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6421FD2B52657200DBE891 /* MusicGenre.swift */; };
 		ACC1407A2CC6AD8600213CC4 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC140792CC6AD8600213CC4 /* AudioManager.swift */; };
+		ACC417C92CCAB73400276CDF /* OnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC417C82CCAB73400276CDF /* OnBoarding.swift */; };
 		ACF75A992B45E0300071633B /* RecordMachineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75A982B45E0300071633B /* RecordMachineApp.swift */; };
 		ACF75A9B2B45E0300071633B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75A9A2B45E0300071633B /* ContentView.swift */; };
 		ACF75A9D2B45E0320071633B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACF75A9C2B45E0320071633B /* Assets.xcassets */; };
@@ -33,6 +34,7 @@
 		AC45A0F82B597E020013EFAB /* DocDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocDirectory.swift; sourceTree = "<group>"; };
 		AC6421FD2B52657200DBE891 /* MusicGenre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicGenre.swift; sourceTree = "<group>"; };
 		ACC140792CC6AD8600213CC4 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		ACC417C82CCAB73400276CDF /* OnBoarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoarding.swift; sourceTree = "<group>"; };
 		ACF75A952B45E0300071633B /* RecordMachine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecordMachine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACF75A982B45E0300071633B /* RecordMachineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMachineApp.swift; sourceTree = "<group>"; };
 		ACF75A9A2B45E0300071633B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 				AC16FFE72CC933540041A2BD /* audio player */,
 				AC3B916F2B58376C005BACD0 /* PDFView.swift */,
 				AC06C3492B58B07600B1F395 /* AttachedFileView.swift */,
+				ACC417C82CCAB73400276CDF /* OnBoarding.swift */,
 			);
 			path = presentation;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 				ACF75AB22B46809D0071633B /* Theme.swift in Sources */,
 				AC3B91702B58376C005BACD0 /* PDFView.swift in Sources */,
 				ACC1407A2CC6AD8600213CC4 /* AudioManager.swift in Sources */,
+				ACC417C92CCAB73400276CDF /* OnBoarding.swift in Sources */,
 				AC3B916E2B5835AD005BACD0 /* MusicKey.swift in Sources */,
 				AC45A0F92B597E020013EFAB /* DocDirectory.swift in Sources */,
 			);

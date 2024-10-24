@@ -174,7 +174,7 @@ struct AlbumEditorView: View {
                 }
                 
                 
-                Button("Add Song") {
+                Button("Add Track") {
                     let newTrack = Track(index: orderedTracks.count + 1, album: album)
                     newTrack.genre = album.genre
                     album.trackListing.append(newTrack)

@@ -12,6 +12,7 @@ import AVFoundation
 @main
 struct RecordMachineApp: App {
     @State private var audioManager = AudioManager()
+    @AppStorage("isFirstLaunch") private var isFirstLaunch = true
     
     init() {
         configureAudioSession()

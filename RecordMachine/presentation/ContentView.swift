@@ -13,6 +13,8 @@ struct ContentView: View {
     @Environment(AudioManager.self) private var audioManager
     @Query(sort: \Album.title) var albums: [Album]
     @State private var navPath = NavigationPath()
+    @State private var showOnboarding: Bool = false
+    @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true
     
     // Create a grid layout with 2 columns of equal width
 //    let columns = [
@@ -93,6 +95,17 @@ struct ContentView: View {
                 }
                 .sheet(isPresented: audioManager.sheetBinding) {
                     LargeAudioPlayer()
+                }
+                .onAppear {
+                    if isFirstLaunch {
+                        showOnboarding = true
+                        isFirstLaunch = false
+                    } else {
+                        print("Not first launch.")
+                    }
+                }
+                .sheet(isPresented: $showOnboarding) {
+                    OnBoarding(isPresented: $showOnboarding)
                 }
             }
             
