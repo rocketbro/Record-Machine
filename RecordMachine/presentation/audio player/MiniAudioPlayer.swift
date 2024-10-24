@@ -116,7 +116,6 @@ struct MiniAudioPlayer: View {
                                 .cornerRadius(4)
                                 .tint(.white)
                         }
-                        .disabled(track == audioManager.queue.last)
                         
                     }
                 

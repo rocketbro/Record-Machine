@@ -208,16 +208,8 @@ import MediaPlayer
     
     func playTrack(_ track: Track, tracklist: [Track]) {
         resetPlayer()
-        var newQueue: [Track] = [track]
-        if tracklist.contains(track) {
-            for t in tracklist {
-                if tracklist.firstIndex(of: t)! > tracklist.firstIndex(of: track)! {
-                    newQueue.append(t)
-                }
-            }
-        }
-        self.currentTrack = track
-        self.queue = newQueue
+        self.queue = tracklist
+        self.currentTrack = queue[queue.firstIndex(of: track) ?? 0]
         prepareAudioPlayer()
         
         guard let _ = currentTrack?.audioUrl else {
@@ -246,17 +238,21 @@ import MediaPlayer
     }
     
     func skipToNext() {
-        if queue.count != 0 {
-            if currentTrack != queue.last {
-                if let oldTrack = currentTrack {
-                    currentTrack = queue[queue.firstIndex(of: oldTrack)! + 1]
-                    prepareAudioPlayer()
-                }
-            } else {
-                stopAudioPlayer()
-                restartTrack()
-            }
+        guard !queue.isEmpty else { return }
+        guard let currentTrack = currentTrack else { return }
+        
+        // If we're at the last track, loop back to start
+        if currentTrack == queue.last {
+            self.currentTrack = queue.first
+            stopAudioPlayer()
+            restartTrack()
+            return
         }
+        
+        // Move to next track
+        let nextIndex = queue.firstIndex(of: currentTrack)! + 1
+        self.currentTrack = queue[nextIndex]
+        self.prepareAudioPlayer()
     }
     
     func rewindToPrevious() {
@@ -339,13 +335,14 @@ import MediaPlayer
     
     func prepareAudioPlayer() {
         guard let track = currentTrack else {
-            resetPlayer()
+            self.resetPlayer()
             print("No track selected")
             return
         }
+        print(track)
         
         guard let url = track.audioUrl else {
-            resetPlayer()
+            self.resetPlayer()
             print("\(track.title).audioUrl is nil.")
             return
         }

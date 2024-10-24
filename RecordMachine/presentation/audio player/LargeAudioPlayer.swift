@@ -100,7 +100,6 @@ struct LargeAudioPlayer: View {
                             .frame(width: 40, height: 40)
                             .tint(.white)
                     }
-                    .disabled(track == audioManager.queue.first)
                     
                     Spacer()
                     
@@ -123,7 +122,6 @@ struct LargeAudioPlayer: View {
                             .frame(width: 40, height: 40)
                             .tint(.white)
                     }
-                    .disabled(track == audioManager.queue.last)
                     
                     Spacer()
                     
