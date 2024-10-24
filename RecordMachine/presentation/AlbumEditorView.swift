@@ -176,6 +176,7 @@ struct AlbumEditorView: View {
                     let newTrack = Track(index: orderedTracks.count + 1, album: album)
                     newTrack.genre = album.genre
                     album.trackListing.append(newTrack)
+                    audioManager.queue.append(newTrack)
                     navPath.append(newTrack)
                 }
             } header: {
@@ -238,6 +239,12 @@ struct AlbumEditorView: View {
     
     
     func deleteTracks(_ indexSet: IndexSet) {
+        if audioManager.isPlaying {
+            let track = album.trackListing[indexSet.first!]
+            if audioManager.currentTrack == track {
+                audioManager.skipToNext()
+            }
+        }
         album.trackListing.remove(atOffsets: indexSet)
     }
     
@@ -247,10 +254,13 @@ struct AlbumEditorView: View {
         updatedTracks.move(fromOffsets: source, toOffset: destination)
         
         // Update all indices in the ModelContext
-        @Bindable var album = self.album  // Add this if album is a @Model
+        @Bindable var album = self.album
         
         for (position, track) in updatedTracks.enumerated() {
-            track.index = position + 1  // Assuming indices start at 1
+            track.index = position + 1
+        }
+        if audioManager.isPlaying {
+            audioManager.queue = updatedTracks
         }
         
     }

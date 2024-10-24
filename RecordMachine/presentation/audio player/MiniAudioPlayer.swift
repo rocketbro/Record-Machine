@@ -98,7 +98,6 @@ struct MiniAudioPlayer: View {
                                             print(localUrl)
                                             track.audioUrl = localUrl
                                         }
-                                        audioManager.prepareAudioPlayer()
                                     }
                                     url.stopAccessingSecurityScopedResource()
                                 case .failure(let error):

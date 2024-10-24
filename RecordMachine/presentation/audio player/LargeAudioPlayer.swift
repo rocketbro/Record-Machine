@@ -153,7 +153,6 @@ struct LargeAudioPlayer: View {
                     Spacer()
                     
                     Button(action: {
-                        audioManager.stopAudioPlayer()
                         presentFileImporter.toggle()
                     }) {
                         Image(systemName: "waveform.badge.plus")
@@ -169,7 +168,6 @@ struct LargeAudioPlayer: View {
                                     print(localUrl)
                                     track.audioUrl = localUrl
                                 }
-                                audioManager.prepareAudioPlayer()
                             }
                             url.stopAccessingSecurityScopedResource()
                         case .failure(let error):

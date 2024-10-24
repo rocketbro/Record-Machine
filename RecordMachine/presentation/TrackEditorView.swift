@@ -80,9 +80,8 @@ struct TrackEditorView: View {
                     
                     Picker("Album", selection: $track.album) {
                         ForEach(albums) { album in
-                            Text(album.title).tag(album as Album?)
+                            Text(album.title == "" ? "Unknown Album" : album.title).tag(album as Album?)
                         }
-                        Text("None").tag(nil as Album?)
                     }
                     .pickerStyle(.navigationLink)
                     
@@ -99,7 +98,6 @@ struct TrackEditorView: View {
                 
                 Section {
                     Button(action: {
-                        audioManager.stopAudioPlayer()
                         presentFileImporter.toggle()
                     }) {
                         Text(track.audioUrl == nil ? "Add Audio File" : "Change Audio File")
@@ -113,7 +111,6 @@ struct TrackEditorView: View {
                                     print(localUrl)
                                     track.audioUrl = localUrl
                                 }
-                                audioManager.prepareAudioPlayer()
                             }
                             url.stopAccessingSecurityScopedResource()
                         case .failure(let error):
