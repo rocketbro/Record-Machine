@@ -38,16 +38,16 @@ struct AlbumEditorView: View {
                 VStack(alignment: .center) {
                     AlbumImage(album: album)
                     
-                    TextField("Add Title", text: $album.title)
+                    TextField("Add Title", text: $album.title, axis: .vertical)
                         .font(.largeTitle.bold())
                         .focused($keyboardFocus, equals: .title)
-                        .submitLabel(.done)
+                        .submitLabel(.return)
                         .onSubmit { keyboardFocus = nil }
                     
-                    TextField("Add Artist", text: $album.artist)
+                    TextField("Add Artist", text: $album.artist, axis: .vertical)
                         .font(.headline)
                         .focused($keyboardFocus, equals: .artist)
-                        .submitLabel(.done)
+                        .submitLabel(.return)
                         .onSubmit { keyboardFocus = nil }
                     
                     HStack {
@@ -92,16 +92,16 @@ struct AlbumEditorView: View {
                     AlbumImage(album: album, width: 400, height: 400)
                     Spacer()
                     VStack(alignment: .center) {
-                        TextField("Add Title", text: $album.title)
+                        TextField("Add Title", text: $album.title, axis: .vertical)
                             .font(.largeTitle.bold())
                             .focused($keyboardFocus, equals: .title)
-                            .submitLabel(.done)
+                            .submitLabel(.return)
                             .onSubmit { keyboardFocus = nil }
                         
-                        TextField("Add Artist", text: $album.artist)
+                        TextField("Add Artist", text: $album.artist, axis: .vertical)
                             .font(.headline)
                             .focused($keyboardFocus, equals: .artist)
-                            .submitLabel(.done)
+                            .submitLabel(.return)
                             .onSubmit { keyboardFocus = nil }
                         
                         HStack {
@@ -198,7 +198,7 @@ struct AlbumEditorView: View {
         }
         .toolbar {
             
-            if keyboardFocus == .linerNotes {
+            if keyboardFocus != nil {
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()
                     Button("Done") { keyboardFocus = nil }
