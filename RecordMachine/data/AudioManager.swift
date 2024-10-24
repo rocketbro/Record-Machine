@@ -103,6 +103,8 @@ import MediaPlayer
     }
     
     private func processArtwork(_ image: UIImage) -> UIImage {
+        print("Original image orientation: \(image.imageOrientation.rawValue)")
+
         // First make the image square by cropping to center
         let squareImage: UIImage
         if image.size.width != image.size.height {
@@ -112,7 +114,10 @@ import MediaPlayer
             let square = CGRect(x: x, y: y, width: size, height: size)
             
             if let cgImage = image.cgImage?.cropping(to: square) {
-                squareImage = UIImage(cgImage: cgImage)
+                // If original was .down (3), convert to .up (0)
+                let orientation = image.imageOrientation.rawValue == 3 ? .up : image.imageOrientation
+                print("Middle image orientation: \(orientation.rawValue)")
+                squareImage = UIImage(cgImage: cgImage, scale: image.scale, orientation: orientation)
             } else {
                 squareImage = image
             }
@@ -125,18 +130,26 @@ import MediaPlayer
         if squareImage.cgImage?.colorSpace?.name == CGColorSpace.displayP3 {
             UIGraphicsBeginImageContextWithOptions(squareImage.size, false, squareImage.scale)
             squareImage.draw(at: .zero)
-            srgbImage = UIGraphicsGetImageFromCurrentImageContext() ?? squareImage
+            let newImage = UIGraphicsGetImageFromCurrentImageContext() ?? squareImage
             UIGraphicsEndImageContext()
+            srgbImage = UIImage(cgImage: newImage.cgImage!, scale: newImage.scale, orientation: squareImage.imageOrientation)
         } else {
             srgbImage = squareImage
         }
         
-        let targetSize = CGSize(width: 1024, height: 1024) // Standard size for artwork
+        let targetSize = CGSize(width: 1024, height: 1024)
         
         UIGraphicsBeginImageContextWithOptions(targetSize, false, 1.0)
         srgbImage.draw(in: CGRect(origin: .zero, size: targetSize))
         let processedImage = UIGraphicsGetImageFromCurrentImageContext() ?? srgbImage
         UIGraphicsEndImageContext()
+        
+        // Preserve original orientation unless it was .down
+        if let finalCGImage = processedImage.cgImage {
+            let finalOrientation = image.imageOrientation == .down ? .up : image.imageOrientation
+            print("Final image orientation: \(finalOrientation.rawValue)")
+            return UIImage(cgImage: finalCGImage, scale: processedImage.scale, orientation: finalOrientation)
+        }
         
         return processedImage
     }
