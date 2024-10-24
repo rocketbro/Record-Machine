@@ -15,22 +15,18 @@ struct AlbumImage: View {
     var cornerRadius: CGFloat = 8
     
     private var albumTitle: String {
-        guard let title = audioManager.currentTrack?.album?.title else { return "Unknown Album" }
-        
-        if title == "" {
+        if album.title == "" {
             return "Unknown Album"
         } else {
-            return "\(title)"
+            return "\(album.title)"
         }
     }
     
     private var artist: String {
-        guard let artist = audioManager.currentTrack?.album?.artist else { return "Unknown Artist" }
-        
-        if artist == "" {
+        if album.artist == "" {
             return "Unknown Artist"
         } else {
-            return "\(artist)"
+            return "\(album.artist)"
         }
     }
     
@@ -76,6 +72,7 @@ struct AlbumImage: View {
                 VStack(spacing: 30) {
                     Text(albumTitle)
                         .font(.title)
+                        .bold()
                     Text(artist)
                         .font(.title3)
                 }
