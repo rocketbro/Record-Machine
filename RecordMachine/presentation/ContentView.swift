@@ -14,17 +14,48 @@ struct ContentView: View {
     @Query(sort: \Album.title) var albums: [Album]
     @State private var navPath = NavigationPath()
     
+    // Create a grid layout with 2 columns of equal width
+//    let columns = [
+//        GridItem(.flexible()),
+//        GridItem(.flexible())
+//    ]
+    
     var body: some View {
         
         
         ZStack(alignment: .bottom) {
             // Main content
             NavigationStack(path: $navPath) {
+                
+                
+//                LazyVGrid(columns: columns, spacing: 16) {
+//                    ForEach(albums.indices, id: \.self) { index in
+//                        NavigationLink(value: albums[index]) {
+//                            AlbumGridItem(album: albums[index])
+//                        }
+//                    }
+//                }
+//                .padding()
+                
+                
+                
+                
                 List {
                     ForEach(albums) { album in
                         NavigationLink(value: album) {
                             VStack {
                                 HStack {
+                                    if let artworkData = album.artwork {
+                                        if let uiImage = UIImage(data: artworkData) {
+                                            Image(uiImage: uiImage)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(width: 50, height: 50)
+                                                .clipped()
+                                                .cornerRadius(4)
+                                            
+                                        }
+                                    }
                                     VStack(alignment: .leading) {
                                         Text(album.title.isEmpty ? "Unknown Album" : album.title)
                                             .font(.headline)
@@ -44,7 +75,7 @@ struct ContentView: View {
                     }
                     .onDelete(perform: deleteAlbums)
                 }
-                .navigationTitle("Record Machine")
+                .navigationTitle("Records")
                 .navigationDestination(for: Album.self) {
                     AlbumEditorView(album: $0, navPath: $navPath)
                 }
@@ -71,6 +102,7 @@ struct ContentView: View {
                         Spacer()
                         MiniAudioPlayer()
                             .padding(.horizontal, 6)
+                            .padding(.bottom, 6)
                             .shadow(color: .black.opacity(0.35), radius: 20)
                             .transition(.move(edge: .bottom))
                             .onAppear {
