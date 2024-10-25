@@ -93,7 +93,7 @@ struct MiniAudioPlayer: View {
                                 switch result {
                                 case .success(let url):
                                     if url.startAccessingSecurityScopedResource() {
-                                        let localUrl = copyToDocumentDirectory(sourceUrl: url)
+                                        let localUrl = DocumentsManager.copyToDocumentDirectory(sourceUrl: url)
                                         if let localUrl = localUrl {
                                             print(localUrl)
                                             track.audioUrl = localUrl

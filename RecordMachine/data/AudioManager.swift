@@ -353,20 +353,28 @@ import MediaPlayer
             print("No track selected")
             return
         }
-        print(track)
         
-        guard let url = track.audioUrl else {
+        // First try the stored URL
+        let storedUrl = track.audioUrl
+        
+        // Then try to reconstruct the URL from the filename
+        let filename = storedUrl?.lastPathComponent ?? "\(track.title).m4a" // or whatever extension you use
+        guard let validUrl = storedUrl.flatMap({ FileManager.default.fileExists(atPath: $0.path) ? $0 : nil })
+                ?? DocumentsManager.getFileUrl(filename: filename) else {
             self.resetPlayer()
-            print("\(track.title).audioUrl is nil.")
+            print("\(track.title) audio file not found in documents directory.")
             return
         }
         
+        // Update the model with the valid URL
+        track.audioUrl = validUrl
+        
         do {
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer = try AVAudioPlayer(contentsOf: validUrl)
             audioPlayer?.delegate = self
             audioPlayer?.prepareToPlay()
             _currentFileLength = audioPlayer?.duration ?? 0
-            currentFileName = url.lastPathComponent
+            currentFileName = validUrl.lastPathComponent
             
             // Start observing playback progress for updating now playing info
             updateNewTrackData()

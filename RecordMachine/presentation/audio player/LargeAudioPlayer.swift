@@ -163,7 +163,7 @@ struct LargeAudioPlayer: View {
                         switch result {
                         case .success(let url):
                             if url.startAccessingSecurityScopedResource() {
-                                let localUrl = copyToDocumentDirectory(sourceUrl: url)
+                                let localUrl = DocumentsManager.copyToDocumentDirectory(sourceUrl: url)
                                 if let localUrl = localUrl {
                                     print(localUrl)
                                     track.audioUrl = localUrl
@@ -211,7 +211,7 @@ struct LargeAudioPlayer: View {
             return
         }
         audioManager.stopAudioPlayer()
-        deleteFromDocumentDirectory(at: track.audioUrl!)
+        DocumentsManager.deleteFromDocumentDirectory(at: track.audioUrl!)
         track.audioUrl = nil
         audioManager.resetPlayer()
     }
