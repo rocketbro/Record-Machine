@@ -10,6 +10,8 @@
 **/.DS_Store
 .env
 package-lock.json
+.console-output.txt
+old-audio-manager.swift
 
 # Created by https://www.toptal.com/developers/gitignore/api/xcode,macos,git,swift
 # Edit at https://www.toptal.com/developers/gitignore?templates=xcode,macos,git,swift

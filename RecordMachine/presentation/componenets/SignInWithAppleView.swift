@@ -2,7 +2,7 @@ import SwiftUI
 import AuthenticationServices
 import Supabase
 
-struct SignInView: View {
+struct SignInWithAppleView: View {
     var body: some View {
         SignInWithAppleButton(
             onRequest: { request in
@@ -34,7 +34,6 @@ struct SignInView: View {
                                 )
                                 
                                 print("User ID: \(authResponse.user.id)")
-                                print("Full Name: \(fullName)")
                                 
                                 // Update the user's metadata if we have a name
                                 if !fullName.isEmpty {

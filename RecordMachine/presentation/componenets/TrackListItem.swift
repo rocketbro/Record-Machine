@@ -35,7 +35,14 @@ struct TrackListItem: View {
             }
             .contentShape(Rectangle())
             .onTapGesture {
-                audioManager.playTrack(track)
+                print("TrackListItem: Selected track - \(track.title)")
+                // First load the queue
+                audioManager.loadQueue(for: track.album!)
+                // Then find and load the specific track
+                if let index = audioManager.queue.firstIndex(of: track) {
+                    print("TrackListItem: Loading track at index \(index)")
+                    audioManager.loadTrackAtIndex(index)
+                }
                 if !audioManager.showingPlayer {
                     withAnimation {
                         audioManager.showingPlayer.toggle()

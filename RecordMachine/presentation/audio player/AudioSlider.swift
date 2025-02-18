@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct AudioSlider: View {
     @Environment(AudioManager.self) var audioManager
     let onEditingChanged: (Bool) -> Void
@@ -23,18 +21,18 @@ struct AudioSlider: View {
     private let minimumTouchTarget: CGFloat = 20
     
     var duration: Double {
-        audioManager.currentFileLength
+        audioManager.duration
     }
     
     var remainingDuration: Double {
         guard let seekPosition = seekPosition else {
-            return duration - audioManager.audioPlayerCurrentTime
+            return duration - audioManager.currentTime
         }
         return duration - seekPosition
     }
     
     var currentTime: Double {
-        audioManager.audioPlayerCurrentTime
+        audioManager.currentTime
     }
     
     var body: some View {
@@ -50,7 +48,6 @@ struct AudioSlider: View {
                     Rectangle()
                         .fill(Color.primary.opacity(isDragging ? 0.5 : 1.0))
                         .frame(width: progressWidth(in: geometry), height: trackHeight)
-                        //.animation(.linear(duration: 1), value: currentTime)
                 }
                 .cornerRadius(trackHeight / 2)
                 // Custom slider handle

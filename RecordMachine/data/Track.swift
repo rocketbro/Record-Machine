@@ -18,7 +18,7 @@ class Track {
     var genre: MusicGenre = MusicGenre.acoustic
     var lyrics: String = ""
     var notes: String = ""
-    var audioUrl: URL? // Temporary URL for playback
+    var audioUrl: URL? // Persisted URL for playback
     var attachedFiles: [AttachedFile] = []
     var album: Album?
     

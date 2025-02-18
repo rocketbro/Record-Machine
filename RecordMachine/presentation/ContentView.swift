@@ -31,7 +31,7 @@ struct ContentView: View {
                 mainContent
             } else {
                 // Auth screen
-                authContent
+                AuthScreen()
             }
         }
     }
@@ -40,38 +40,46 @@ struct ContentView: View {
         ZStack(alignment: .bottom) {
             NavigationStack(path: $navPath) {
                 List {
-                    ForEach(albums) { album in
-                        NavigationLink(value: album) {
-                            VStack {
-                                HStack {
-                                    if let artworkData = album.artwork {
-                                        if let uiImage = UIImage(data: artworkData) {
-                                            Image(uiImage: uiImage)
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fill)
-                                                .frame(width: 50, height: 50)
-                                                .clipped()
-                                                .cornerRadius(4)
+                    Section("My Library") {
+                        ForEach(albums) { album in
+                            NavigationLink(value: album) {
+                                VStack {
+                                    HStack {
+                                        if let artworkData = album.artwork {
+                                            if let uiImage = UIImage(data: artworkData) {
+                                                Image(uiImage: uiImage)
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fill)
+                                                    .frame(width: 50, height: 50)
+                                                    .clipped()
+                                                    .cornerRadius(4)
+                                            }
                                         }
-                                    }
-                                    VStack(alignment: .leading) {
-                                        Text(album.title.isEmpty ? "Unknown Album" : album.title)
-                                            .font(.headline)
-                                        Text(album.artist.isEmpty ? "Unknown Artist" : album.artist)
+                                        VStack(alignment: .leading) {
+                                            Text(album.title.isEmpty ? "Unknown Album" : album.title)
+                                                .font(.headline)
+                                            Text(album.artist.isEmpty ? "Unknown Artist" : album.artist)
+                                                .font(.subheadline)
+                                        }
+                                        Spacer()
+                                        Text(String(album.trackListing.count) + (album.trackListing.count == 1 ? " track" : " tracks"))
                                             .font(.subheadline)
+                                            .padding(.horizontal)
+                                            .padding(.vertical, 4)
+                                            .background(primaryOrange)
+                                            .clipShape(Capsule())
                                     }
-                                    Spacer()
-                                    Text(String(album.trackListing.count) + (album.trackListing.count == 1 ? " track" : " tracks"))
-                                        .font(.subheadline)
-                                        .padding(.horizontal)
-                                        .padding(.vertical, 4)
-                                        .background(primaryOrange)
-                                        .clipShape(Capsule())
                                 }
                             }
                         }
+                        .onDelete(perform: deleteAlbums)
                     }
-                    .onDelete(perform: deleteAlbums)
+                    
+                    Section("Streaming") {
+                        NavigationLink(destination: StreamingView()) {
+                            Label("Browse Streaming Library", systemImage: "cloud")
+                        }
+                    }
                 }
                 .navigationTitle("Records")
                 .navigationDestination(for: Album.self) {
@@ -136,22 +144,6 @@ struct ContentView: View {
         .sheet(isPresented: $showOnboarding) {
             OnBoarding(isPresented: $showOnboarding)
         }
-    }
-    
-    private var authContent: some View {
-        VStack(spacing: 20) {
-            Text("Record Machine")
-                .font(.largeTitle)
-                .bold()
-            
-            Text("Sign in to start creating albums")
-                .foregroundStyle(.secondary)
-            
-            SignInView()
-                .frame(width: 280, height: 45)
-                .padding(.top)
-        }
-        .padding()
     }
     
     func addAlbum() {

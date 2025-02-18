@@ -109,9 +109,10 @@ struct TrackEditorView: View {
                                 let localUrl = DocumentsManager.copyToDocumentDirectory(sourceUrl: url)
                                 if let localUrl = localUrl {
                                     print(localUrl)
-                                    track.audioUrl = localUrl
-                                    if !audioManager.isPlaying || audioManager.currentTrack == track {
-                                        audioManager.prepareAudioPlayer()
+                                    do {
+                                        try audioManager.loadLocalFile(url: localUrl, for: track)
+                                    } catch {
+                                        print("Error loading track: \(error)")
                                     }
                                 }
                             }
@@ -238,13 +239,9 @@ struct TrackEditorView: View {
     
     func deleteAudioUrl() {
         if audioManager.currentTrack == track {
-            audioManager.stopAudioPlayer()
+            audioManager.stopPlayback()
         }
         DocumentsManager.deleteFromDocumentDirectory(at: track.audioUrl!)
         track.audioUrl = nil
-        
-        if audioManager.currentTrack == track {
-            audioManager.resetPlayer()
-        }
     }
 }

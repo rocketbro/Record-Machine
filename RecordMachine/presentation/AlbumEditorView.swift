@@ -73,7 +73,7 @@ struct AlbumEditorView: View {
                             Task {
                                 if let loaded = try? await artworkSelection?.loadTransferable(type: Data.self) {
                                     album.artwork = loaded
-                                    audioManager.updateNewTrackData()
+                                    audioManager.updateNowPlayingData()
                                 } else {
                                     print("Artwork load failed")
                                 }
@@ -128,7 +128,7 @@ struct AlbumEditorView: View {
                                 Task {
                                     if let loaded = try? await artworkSelection?.loadTransferable(type: Data.self) {
                                         album.artwork = loaded
-                                        audioManager.updateNewTrackData()
+                                        audioManager.updateNowPlayingData()
                                     } else {
                                         print("Artwork load failed")
                                     }
@@ -178,7 +178,7 @@ struct AlbumEditorView: View {
                     let newTrack = Track(index: orderedTracks.count + 1, album: album)
                     newTrack.genre = album.genre
                     album.trackListing.append(newTrack)
-                    audioManager.queue.append(newTrack)
+                    audioManager.appendToQueue(newTrack)
                     navPath.append(newTrack)
                 }
             } header: {
@@ -227,7 +227,7 @@ struct AlbumEditorView: View {
                     Button(role: .destructive, action: {
                         album.artwork = nil
                         artworkSelection = nil
-                        audioManager.updateNewTrackData()
+                        audioManager.updateNowPlayingData()
                     }) {
                         Label("Delete artwork", systemImage: "trash")
                     }
@@ -263,7 +263,7 @@ struct AlbumEditorView: View {
             track.index = position + 1
         }
         if audioManager.isPlaying {
-            audioManager.queue = updatedTracks
+            audioManager.updateQueueOrder(updatedTracks)
         }
         
     }
@@ -279,9 +279,7 @@ struct AlbumEditorView: View {
     
     func playAlbum() {
         withAnimation {
-            if let track = orderedTracks.first {
-                audioManager.playTrack(track)
-            }
+            audioManager.loadQueue(for: album)
             if !audioManager.showingPlayer {
                 audioManager.showingPlayer.toggle()
             }

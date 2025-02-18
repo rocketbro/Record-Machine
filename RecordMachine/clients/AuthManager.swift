@@ -34,13 +34,13 @@ final class AuthManager {
                     self.session = session
                     self.currentUser = session?.user
                     self.isAuthenticated = session != nil
-                    print("Initial session: \(session?.user.email ?? "none")")
+                    print("Initial session: \(session?.user.id.uuidString ?? "none")")
                     
                 case .signedIn:
                     self.session = session
                     self.currentUser = session?.user
                     self.isAuthenticated = true
-                    print("Signed in: \(session?.user.email ?? "unknown")")
+                    print("Signed in: \(session?.user.id.uuidString ?? "unknown")")
                     
                 case .signedOut:
                     self.session = nil
@@ -71,7 +71,7 @@ final class AuthManager {
                     self.session = session
                     self.currentUser = session?.user
                     self.isAuthenticated = true
-                    print("MFA challenge verified for user: \(session?.user.email ?? "unknown")")
+                    print("MFA challenge verified for user: \(session?.user.id.uuidString ?? "unknown")")
                 }
             }
         }
