@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import AuthenticationServices
 
 struct ContentView: View {
     @Environment(\.modelContext) var modelContext
@@ -82,6 +83,11 @@ struct ContentView: View {
                     AlbumEditorView(album: $0, navPath: $navPath)
                 }
                 .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        SignInView()
+                            .signInWithAppleButtonStyle(.black)
+                    }
+                    
                     ToolbarItem {
                         Button("Add Album", systemImage: "plus", action: addAlbum)
                     }
