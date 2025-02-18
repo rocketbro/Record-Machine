@@ -12,6 +12,7 @@ import AVFoundation
 @main
 struct RecordMachineApp: App {
     @State private var audioManager = AudioManager()
+    @State private var authManager = AuthManager()
     @AppStorage("isFirstLaunch") private var isFirstLaunch = true
     
     init() {
@@ -22,6 +23,7 @@ struct RecordMachineApp: App {
         WindowGroup {
             ContentView()
                 .environment(audioManager)
+                .environment(authManager)
                 .monospaced()
                 .preferredColorScheme(.dark)
         }.modelContainer(for: Album.self)

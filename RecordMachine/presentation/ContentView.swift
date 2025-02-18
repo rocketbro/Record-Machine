@@ -12,6 +12,7 @@ import AuthenticationServices
 struct ContentView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(AudioManager.self) private var audioManager
+    @Environment(AuthManager.self) private var authManager
     @Query(sort: \Album.title) var albums: [Album]
     @State private var navPath = NavigationPath()
     @State private var showOnboarding: Bool = false
@@ -24,25 +25,20 @@ struct ContentView: View {
 //    ]
     
     var body: some View {
-        
-        
+        Group {
+            if authManager.isAuthenticated {
+                // Main app content
+                mainContent
+            } else {
+                // Auth screen
+                authContent
+            }
+        }
+    }
+    
+    private var mainContent: some View {
         ZStack(alignment: .bottom) {
-            // Main content
             NavigationStack(path: $navPath) {
-                
-                
-//                LazyVGrid(columns: columns, spacing: 16) {
-//                    ForEach(albums.indices, id: \.self) { index in
-//                        NavigationLink(value: albums[index]) {
-//                            AlbumGridItem(album: albums[index])
-//                        }
-//                    }
-//                }
-//                .padding()
-                
-                
-                
-                
                 List {
                     ForEach(albums) { album in
                         NavigationLink(value: album) {
@@ -56,7 +52,6 @@ struct ContentView: View {
                                                 .frame(width: 50, height: 50)
                                                 .clipped()
                                                 .cornerRadius(4)
-                                            
                                         }
                                     }
                                     VStack(alignment: .leading) {
@@ -84,8 +79,11 @@ struct ContentView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
-                        SignInView()
-                            .signInWithAppleButtonStyle(.black)
+                        Button("Sign Out") {
+                            Task {
+                                try? await authManager.signOut()
+                            }
+                        }
                     }
                     
                     ToolbarItem {
@@ -98,20 +96,6 @@ struct ContentView: View {
                             }
                         }
                     }
-                }
-                .sheet(isPresented: audioManager.sheetBinding) {
-                    LargeAudioPlayer()
-                }
-                .onAppear {
-                    if isFirstLaunch {
-                        showOnboarding = true
-                        isFirstLaunch = false
-                    } else {
-                        print("Not first launch.")
-                    }
-                }
-                .sheet(isPresented: $showOnboarding) {
-                    OnBoarding(isPresented: $showOnboarding)
                 }
             }
             
@@ -138,6 +122,36 @@ struct ContentView: View {
                 }
             }
         }
+        .sheet(isPresented: audioManager.sheetBinding) {
+            LargeAudioPlayer()
+        }
+        .onAppear {
+            if isFirstLaunch {
+                showOnboarding = true
+                isFirstLaunch = false
+            } else {
+                print("Not first launch.")
+            }
+        }
+        .sheet(isPresented: $showOnboarding) {
+            OnBoarding(isPresented: $showOnboarding)
+        }
+    }
+    
+    private var authContent: some View {
+        VStack(spacing: 20) {
+            Text("Record Machine")
+                .font(.largeTitle)
+                .bold()
+            
+            Text("Sign in to start creating albums")
+                .foregroundStyle(.secondary)
+            
+            SignInView()
+                .frame(width: 280, height: 45)
+                .padding(.top)
+        }
+        .padding()
     }
     
     func addAlbum() {
