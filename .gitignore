@@ -1,4 +1,3 @@
-
 # Supabase
 **/supabase/.temp
 **/supabase/.branches
@@ -161,3 +160,11 @@ iOSInjectionProject/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 # End of https://www.toptal.com/developers/gitignore/api/xcode,macos,git,swift
+
+# Manually added
+.env
+.env.production
+node_modules/
+
+# Xcode Config
+RecordMachine/Config.xcconfig

@@ -3,55 +3,29 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 71;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AC06C3482B58A7F400B1F395 /* AttachedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC06C3472B58A7F400B1F395 /* AttachedFile.swift */; };
-		AC06C34A2B58B07600B1F395 /* AttachedFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC06C3492B58B07600B1F395 /* AttachedFileView.swift */; };
-		AC3B916E2B5835AD005BACD0 /* MusicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3B916D2B5835AD005BACD0 /* MusicKey.swift */; };
-		AC3B91702B58376C005BACD0 /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3B916F2B58376C005BACD0 /* PDFView.swift */; };
-		AC45A0F92B597E020013EFAB /* DocDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC45A0F82B597E020013EFAB /* DocDirectory.swift */; };
-		AC6421FE2B52657200DBE891 /* MusicGenre.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6421FD2B52657200DBE891 /* MusicGenre.swift */; };
-		ACC1407A2CC6AD8600213CC4 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC140792CC6AD8600213CC4 /* AudioManager.swift */; };
-		ACC417C92CCAB73400276CDF /* OnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC417C82CCAB73400276CDF /* OnBoarding.swift */; };
-		ACF75A992B45E0300071633B /* RecordMachineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75A982B45E0300071633B /* RecordMachineApp.swift */; };
-		ACF75A9B2B45E0300071633B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75A9A2B45E0300071633B /* ContentView.swift */; };
-		ACF75A9D2B45E0320071633B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACF75A9C2B45E0320071633B /* Assets.xcassets */; };
-		ACF75AA12B45E0320071633B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACF75AA02B45E0320071633B /* Preview Assets.xcassets */; };
-		ACF75AAA2B45E0560071633B /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75AA92B45E0560071633B /* Album.swift */; };
-		ACF75AAC2B45E0A30071633B /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75AAB2B45E0A30071633B /* Track.swift */; };
-		ACF75AAE2B45EBFB0071633B /* AlbumEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75AAD2B45EBFB0071633B /* AlbumEditorView.swift */; };
-		ACF75AB02B4671160071633B /* TrackEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75AAF2B4671160071633B /* TrackEditorView.swift */; };
-		ACF75AB22B46809D0071633B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF75AB12B46809D0071633B /* Theme.swift */; };
+		AC9C38F02D6470160003CBA5 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = AC9C38EF2D6470160003CBA5 /* Supabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AC06C3472B58A7F400B1F395 /* AttachedFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachedFile.swift; sourceTree = "<group>"; };
-		AC06C3492B58B07600B1F395 /* AttachedFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachedFileView.swift; sourceTree = "<group>"; };
-		AC3B916D2B5835AD005BACD0 /* MusicKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicKey.swift; sourceTree = "<group>"; };
-		AC3B916F2B58376C005BACD0 /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
-		AC45A0F82B597E020013EFAB /* DocDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocDirectory.swift; sourceTree = "<group>"; };
-		AC6421FD2B52657200DBE891 /* MusicGenre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicGenre.swift; sourceTree = "<group>"; };
-		ACC140792CC6AD8600213CC4 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
-		ACC417C82CCAB73400276CDF /* OnBoarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoarding.swift; sourceTree = "<group>"; };
 		ACF75A952B45E0300071633B /* RecordMachine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecordMachine.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		ACF75A982B45E0300071633B /* RecordMachineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMachineApp.swift; sourceTree = "<group>"; };
-		ACF75A9A2B45E0300071633B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		ACF75A9C2B45E0320071633B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		ACF75A9E2B45E0320071633B /* RecordMachine.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RecordMachine.entitlements; sourceTree = "<group>"; };
-		ACF75AA02B45E0320071633B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		ACF75AA92B45E0560071633B /* Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
-		ACF75AAB2B45E0A30071633B /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
-		ACF75AAD2B45EBFB0071633B /* AlbumEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumEditorView.swift; sourceTree = "<group>"; };
-		ACF75AAF2B4671160071633B /* TrackEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackEditorView.swift; sourceTree = "<group>"; };
-		ACF75AB12B46809D0071633B /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
-		ACFEABFB2B85823900EA0FEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		AC9C38E32D646C2B0003CBA5 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = ACF75A942B45E0300071633B /* RecordMachine */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		AC16FFE72CC933540041A2BD /* audio player */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "audio player"; sourceTree = "<group>"; };
-		AC16FFE82CC939170041A2BD /* componenets */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = componenets; sourceTree = "<group>"; };
+		AC9C38C72D646C2B0003CBA5 /* RecordMachine */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (AC9C38E32D646C2B0003CBA5 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = RecordMachine; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,16 +33,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC9C38F02D6470160003CBA5 /* Supabase in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AC9C38EE2D6470160003CBA5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		ACF75A8C2B45E0300071633B = {
 			isa = PBXGroup;
 			children = (
-				ACF75A972B45E0300071633B /* RecordMachine */,
+				AC9C38C72D646C2B0003CBA5 /* RecordMachine */,
+				AC9C38EE2D6470160003CBA5 /* Frameworks */,
 				ACF75A962B45E0300071633B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -79,58 +62,6 @@
 				ACF75A952B45E0300071633B /* RecordMachine.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		ACF75A972B45E0300071633B /* RecordMachine */ = {
-			isa = PBXGroup;
-			children = (
-				ACFEABFB2B85823900EA0FEF /* Info.plist */,
-				ACF75AA82B45E0460071633B /* presentation */,
-				ACF75AA72B45E0410071633B /* data */,
-				ACF75A982B45E0300071633B /* RecordMachineApp.swift */,
-				ACF75A9C2B45E0320071633B /* Assets.xcassets */,
-				ACF75A9E2B45E0320071633B /* RecordMachine.entitlements */,
-				ACF75A9F2B45E0320071633B /* Preview Content */,
-			);
-			path = RecordMachine;
-			sourceTree = "<group>";
-		};
-		ACF75A9F2B45E0320071633B /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				ACF75AA02B45E0320071633B /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		ACF75AA72B45E0410071633B /* data */ = {
-			isa = PBXGroup;
-			children = (
-				ACF75AA92B45E0560071633B /* Album.swift */,
-				ACF75AAB2B45E0A30071633B /* Track.swift */,
-				AC6421FD2B52657200DBE891 /* MusicGenre.swift */,
-				AC3B916D2B5835AD005BACD0 /* MusicKey.swift */,
-				AC06C3472B58A7F400B1F395 /* AttachedFile.swift */,
-				AC45A0F82B597E020013EFAB /* DocDirectory.swift */,
-				ACC140792CC6AD8600213CC4 /* AudioManager.swift */,
-			);
-			path = data;
-			sourceTree = "<group>";
-		};
-		ACF75AA82B45E0460071633B /* presentation */ = {
-			isa = PBXGroup;
-			children = (
-				AC16FFE82CC939170041A2BD /* componenets */,
-				ACF75A9A2B45E0300071633B /* ContentView.swift */,
-				ACF75AAD2B45EBFB0071633B /* AlbumEditorView.swift */,
-				ACF75AAF2B4671160071633B /* TrackEditorView.swift */,
-				ACF75AB12B46809D0071633B /* Theme.swift */,
-				AC16FFE72CC933540041A2BD /* audio player */,
-				AC3B916F2B58376C005BACD0 /* PDFView.swift */,
-				AC06C3492B58B07600B1F395 /* AttachedFileView.swift */,
-				ACC417C82CCAB73400276CDF /* OnBoarding.swift */,
-			);
-			path = presentation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,11 +80,11 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				AC16FFE72CC933540041A2BD /* audio player */,
-				AC16FFE82CC939170041A2BD /* componenets */,
+				AC9C38C72D646C2B0003CBA5 /* RecordMachine */,
 			);
 			name = RecordMachine;
 			packageProductDependencies = (
+				AC9C38EF2D6470160003CBA5 /* Supabase */,
 			);
 			productName = RecordMachine;
 			productReference = ACF75A952B45E0300071633B /* RecordMachine.app */;
@@ -184,6 +115,7 @@
 			);
 			mainGroup = ACF75A8C2B45E0300071633B;
 			packageReferences = (
+				AC9C38612D646A940003CBA5 /* XCRemoteSwiftPackageReference "supabase-swift" */,
 			);
 			productRefGroup = ACF75A962B45E0300071633B /* Products */;
 			projectDirPath = "";
@@ -199,8 +131,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACF75AA12B45E0320071633B /* Preview Assets.xcassets in Resources */,
-				ACF75A9D2B45E0320071633B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -211,21 +141,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACF75AAE2B45EBFB0071633B /* AlbumEditorView.swift in Sources */,
-				AC06C3482B58A7F400B1F395 /* AttachedFile.swift in Sources */,
-				ACF75AAC2B45E0A30071633B /* Track.swift in Sources */,
-				AC6421FE2B52657200DBE891 /* MusicGenre.swift in Sources */,
-				ACF75A9B2B45E0300071633B /* ContentView.swift in Sources */,
-				ACF75AB02B4671160071633B /* TrackEditorView.swift in Sources */,
-				AC06C34A2B58B07600B1F395 /* AttachedFileView.swift in Sources */,
-				ACF75A992B45E0300071633B /* RecordMachineApp.swift in Sources */,
-				ACF75AAA2B45E0560071633B /* Album.swift in Sources */,
-				ACF75AB22B46809D0071633B /* Theme.swift in Sources */,
-				AC3B91702B58376C005BACD0 /* PDFView.swift in Sources */,
-				ACC1407A2CC6AD8600213CC4 /* AudioManager.swift in Sources */,
-				ACC417C92CCAB73400276CDF /* OnBoarding.swift in Sources */,
-				AC3B916E2B5835AD005BACD0 /* MusicKey.swift in Sources */,
-				AC45A0F92B597E020013EFAB /* DocDirectory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,6 +149,8 @@
 /* Begin XCBuildConfiguration section */
 		ACF75AA22B45E0320071633B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = AC9C38C72D646C2B0003CBA5 /* RecordMachine */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -297,6 +214,8 @@
 		};
 		ACF75AA32B45E0320071633B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = AC9C38C72D646C2B0003CBA5 /* RecordMachine */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -352,6 +271,8 @@
 		};
 		ACF75AA52B45E0320071633B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = AC9C38C72D646C2B0003CBA5 /* RecordMachine */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -395,6 +316,8 @@
 		};
 		ACF75AA62B45E0320071633B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = AC9C38C72D646C2B0003CBA5 /* RecordMachine */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -458,6 +381,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AC9C38612D646A940003CBA5 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AC9C38EF2D6470160003CBA5 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC9C38612D646A940003CBA5 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = ACF75A8D2B45E0300071633B /* Project object */;
 }
