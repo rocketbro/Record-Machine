@@ -193,9 +193,9 @@ struct LargeAudioPlayer: View {
                 Image(systemName: "waveform")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 200, height: 200)
+                    .frame(width: 100, height: 100)
                     .foregroundStyle(primaryOrange)
-                    .symbolEffect(.bounce, options: .repeating, value: audioManager.isPlaying)
+                    .symbolEffect(.bounce.up, options: .repeating, isActive: audioManager.isPlaying)
                 
                 Spacer()
                 

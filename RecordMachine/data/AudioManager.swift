@@ -189,6 +189,7 @@ final class AudioManager: NSObject {
     
     private func loadStreamTrack(_ track: StreamTrack) async throws {
         print("AudioManager: Loading streaming track - \(track.title)")
+        print("AudioManager: Object path - \(track.objectPath)")
         currentTrack = nil
         currentStreamTrack = track
         stopObservation()
@@ -196,8 +197,10 @@ final class AudioManager: NSObject {
         do {
             let signedUrl = try await streamingService.getSignedUrl(for: track)
             print("AudioManager: Got signed URL for streaming track")
+            print("AudioManager: Signed URL - \(signedUrl.absoluteString)")
             
             await MainActor.run {
+                print("AudioManager: Attempting to load stream with URL")
                 streamingProvider.load(url: signedUrl, track: track)
                 currentProvider = streamingProvider
                 updateNowPlayingData()
@@ -209,6 +212,10 @@ final class AudioManager: NSObject {
             }
         } catch {
             print("AudioManager: Error loading streaming track: \(error)")
+            if let urlError = error as? URLError {
+                print("AudioManager: URL Error - \(urlError.localizedDescription)")
+                print("AudioManager: Error Code - \(urlError.code)")
+            }
         }
     }
     
@@ -392,7 +399,7 @@ final class AudioManager: NSObject {
     
     func updateNowPlayingData() {
         print("AudioManager: Updating Now Playing info")
-        var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo ?? [String: Any]()
+        var nowPlayingInfo = [String: Any]()
         
         if let track = currentTrack {
             print("AudioManager: Updating Now Playing with local track: \(track.title)")
@@ -410,18 +417,26 @@ final class AudioManager: NSObject {
                 }
                 nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
             }
+            
+            // Only add duration and time for local tracks
+            nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = _currentFileLength
+            nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = currentTime
+            
         } else if let streamTrack = currentStreamTrack {
             print("AudioManager: Updating Now Playing with stream track: \(streamTrack.title)")
             nowPlayingInfo[MPMediaItemPropertyTitle] = streamTrack.title
             nowPlayingInfo[MPMediaItemPropertyArtist] = streamTrack.artist
             nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = streamTrack.title
+            
+            // For streaming tracks, skip duration and time info
+            // This will make the progress bar indeterminate in control center
         } else {
             print("AudioManager: Warning - No track available for Now Playing info")
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
+            return
         }
         
-        print("AudioManager: Setting playback info - Duration: \(duration), Current Time: \(currentTime), Is Playing: \(isPlaying)")
-        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = duration
-        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = currentTime
+        // Always set playback rate
         nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = isPlaying ? 1.0 : 0.0
         
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo

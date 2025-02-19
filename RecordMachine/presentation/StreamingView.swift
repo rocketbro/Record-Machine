@@ -4,7 +4,11 @@ struct StreamingView: View {
     @Environment(AudioManager.self) private var audioManager
     
     // For now, we'll just show our demo track
-    private let availableTracks = [StreamTrack.demoTrack]
+    private let availableTracks = [
+        StreamTrack.demoTrack,
+        StreamTrack.spinners,
+        StreamTrack.weezer
+    ]
     
     var body: some View {
         List {

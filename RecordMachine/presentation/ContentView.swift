@@ -40,6 +40,13 @@ struct ContentView: View {
         ZStack(alignment: .bottom) {
             NavigationStack(path: $navPath) {
                 List {
+                    
+                    Section("Streaming") {
+                        NavigationLink(destination: StreamingView()) {
+                            Label("Browse Streaming Library", systemImage: "cloud")
+                        }
+                    }
+                    
                     Section("My Library") {
                         ForEach(albums) { album in
                             NavigationLink(value: album) {
@@ -75,11 +82,6 @@ struct ContentView: View {
                         .onDelete(perform: deleteAlbums)
                     }
                     
-                    Section("Streaming") {
-                        NavigationLink(destination: StreamingView()) {
-                            Label("Browse Streaming Library", systemImage: "cloud")
-                        }
-                    }
                 }
                 .navigationTitle("Records")
                 .navigationDestination(for: Album.self) {

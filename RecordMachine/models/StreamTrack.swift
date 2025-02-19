@@ -13,4 +13,13 @@ struct StreamTrack: Identifiable, Codable {
         artist: "Skrillex",
         objectPath: "demos/skrillex-live-2024.mp3"
     )
-} 
+
+    static let weezer = StreamTrack(
+        id: "demo-2",
+        title: "Blast Off!",
+        artist: "Weezer",
+        objectPath: "demos/weezer-blast-off!.mp3"
+    )
+    
+    static let spinners = StreamTrack(id: "demo-3", title: "Long, Long Time", artist: "Asher & the Spinners", objectPath: "demos/asher-and-the-spinners-long-long-time.mp3")
+}

@@ -11,7 +11,7 @@ final class StreamingService: Sendable {
             options: FunctionInvokeOptions(
                 body: [
                     "objectPath": track.objectPath,
-                    "expiresIn": "3600" // 1 hour
+                    "expiresIn": String(3600) // Convert number to string for SDK compatibility
                 ]
             )
         )

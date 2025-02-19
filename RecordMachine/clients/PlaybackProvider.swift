@@ -101,6 +101,7 @@ class StreamingPlaybackProvider: PlaybackProvider {
     // These properties are accessed from non-isolated cleanup
     private nonisolated(unsafe) var player: AVPlayer?
     private nonisolated(unsafe) var timeObserver: Any?
+    private var durationObserver: NSKeyValueObservation?
     private var track: StreamTrack?
     
     private(set) var isPlaying: Bool = false
@@ -110,14 +111,10 @@ class StreamingPlaybackProvider: PlaybackProvider {
     var artist: String? { track?.artist }
     
     func load(url: URL, track: StreamTrack) {
+        cleanup()
+        
         self.track = track
         let playerItem = AVPlayerItem(url: url)
-        
-        // Remove existing time observer
-        if let observer = timeObserver {
-            player?.removeTimeObserver(observer)
-            timeObserver = nil
-        }
         
         // Create or update player
         if player == nil {
@@ -126,64 +123,110 @@ class StreamingPlaybackProvider: PlaybackProvider {
             player?.replaceCurrentItem(with: playerItem)
         }
         
+        // Observe duration changes
+        durationObserver = playerItem.observe(\.duration) { [weak self] item, _ in
+            Task { @MainActor in
+                let duration = item.duration.seconds
+                if duration.isFinite && !duration.isNaN && duration > 0 {
+                    self?.duration = duration
+                    self?.updateNowPlayingData()
+                }
+            }
+        }
+        
+        // Add observer for playback end
+        NotificationCenter.default.addObserver(
+            forName: .AVPlayerItemDidPlayToEndTime,
+            object: playerItem,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in
+                self?.isPlaying = false
+                self?.updateNowPlayingData()
+            }
+        }
+        
         // Add time observer
         let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
         timeObserver = player?.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
             Task { @MainActor in
                 guard let self = self else { return }
                 self.currentTime = time.seconds
-                if let duration = self.player?.currentItem?.duration {
-                    self.duration = duration.seconds
-                }
                 self.updateNowPlayingData()
             }
+        }
+    }
+    
+    private func cleanup() {
+        // Remove time observer
+        if let observer = timeObserver {
+            player?.removeTimeObserver(observer)
+            timeObserver = nil
+        }
+        
+        // Remove duration observer
+        durationObserver?.invalidate()
+        durationObserver = nil
+        
+        // Reset state
+        currentTime = 0
+        duration = 0
+        isPlaying = false
+    }
+    
+    deinit {
+        // Schedule cleanup on the main actor
+        Task { @MainActor in
+            cleanup()
         }
     }
     
     func play() {
         player?.play()
         isPlaying = true
+        updateNowPlayingData()
     }
     
     func pause() {
         player?.pause()
         isPlaying = false
+        updateNowPlayingData()
     }
     
     func seek(to time: TimeInterval) {
         let cmTime = CMTime(seconds: time, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-        player?.seek(to: cmTime)
+        player?.seek(to: cmTime) { [weak self] finished in
+            if finished {
+                Task { @MainActor in
+                    self?.currentTime = time
+                    self?.updateNowPlayingData()
+                }
+            }
+        }
     }
     
     func stop() {
         player?.pause()
         player?.seek(to: .zero)
         isPlaying = false
+        currentTime = 0
+        updateNowPlayingData()
     }
     
     func updateNowPlayingData() {
         var info = [String: Any]()
         info[MPMediaItemPropertyTitle] = title
         info[MPMediaItemPropertyArtist] = artist
-        info[MPMediaItemPropertyPlaybackDuration] = duration
+        
+        // Only include duration if it's valid
+        if duration > 0 && !duration.isNaN {
+            info[MPMediaItemPropertyPlaybackDuration] = duration
+        }
+        
         info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = currentTime
         info[MPNowPlayingInfoPropertyPlaybackRate] = isPlaying ? 1.0 : 0.0
         
         MPNowPlayingInfoCenter.default().nowPlayingInfo = info
-    }
-    
-    private func cleanupTimeObserver() {
-        if let observer = timeObserver {
-            player?.removeTimeObserver(observer)
-            timeObserver = nil
-        }
-    }
-    
-    deinit {
-        // AVPlayer cleanup is thread-safe
-        if let observer = timeObserver {
-            player?.removeTimeObserver(observer)
-        }
     }
 }
 
